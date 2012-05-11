@@ -1,0 +1,33 @@
+Welcome to GT Library for GNU Radio!
+
+Author : Yong Jun Chang (changyongjun@gmail.com)
+
+How to Build GT Library:
+
+See these steps fow a quick build guide.
+
+  (1) Ensure that you've installed UHD and GNU Radio.
+
+  (2) Building from cmake:
+
+      $ mkdir $(builddir)
+      $ cd $(builddir)
+      $ cmake [OPTIONS] $(srcdir)
+      $ make
+      $ sudo make install
+
+Options:
+
+for USRP-E100:
+
+-DCMAKE_INSTALL_PREFIX=/usr 
+-DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchains/arm_cortex_a8_native.cmake ../
+
+Source code can be found from the GITHUB in:
+
+    git://github.com/ychang/gr-gtlib.git
+
+Please send questions, comments, and suggestions to:
+
+    http://www.ece.gatech.edu/research/labs/sarl/
+
