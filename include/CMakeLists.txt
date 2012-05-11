@@ -22,5 +22,7 @@
 ########################################################################
 install(FILES
     gtlib_api.h
-    gtlib_bfsk_modulator_fc.h DESTINATION include/gtlib
+    gtlib_bfsk_modulator_fc.h
+    gtlib_ncbfsk_freq_diversity.h
+    gtlib_framer_sink_2.h DESTINATION include/gtlib
 )

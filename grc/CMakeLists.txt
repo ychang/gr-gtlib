@@ -16,7 +16,8 @@
 # along with GNU Radio; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-
 install(FILES
-    gtlib_bfsk_modulator_fc.xml DESTINATION share/gnuradio/grc/blocks
+    gtlib_bfsk_modulator_fc.xml
+    gtlib_ncbfsk_freq_diversity.xml
+    gtlib_framer_sink_2.xml DESTINATION share/gnuradio/grc/blocks
 )
