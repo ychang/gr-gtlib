@@ -1,0 +1,756 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.6.3">
+  <compounddef id="classgtlib__framer__sink__2" kind="class" prot="public">
+    <compoundname>gtlib_framer_sink_2</compoundname>
+    <includes refid="gtlib__framer__sink__2_8h" local="no">gtlib_framer_sink_2.h</includes>
+      <sectiondef kind="private-type">
+      <memberdef kind="enum" id="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6f" prot="private" static="no">
+        <name>state_t</name>
+        <enumvalue id="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6fac74e9bb3a622abd9c57c331cd62f750d" prot="private">
+          <name>STATE_SYNC_SEARCH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6fa9042ec4e4121b249fc2e764d9c16250e" prot="private">
+          <name>STATE_HAVE_SYNC</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6fadc0f913b11a86b04dc227a937a06e246" prot="private">
+          <name>STATE_HAVE_HEADER</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6fac76c7cbeae605b2773e96e18f5cf10b3" prot="private">
+          <name>STATE_HAVE_SCSF_WAIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="80" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="80" bodyend="80"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a2973ecfb4980bd926070f5a57c6f6a68" prot="private" static="yes" mutable="no">
+        <type>const int</type>
+        <definition>const int gtlib_framer_sink_2::MAX_PKT_LEN</definition>
+        <argsstring></argsstring>
+        <name>MAX_PKT_LEN</name>
+        <initializer> 4096</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="82" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a76f87e34acea63b437d2dfbab24ca023" prot="private" static="yes" mutable="no">
+        <type>const int</type>
+        <definition>const int gtlib_framer_sink_2::HEADERBITLEN</definition>
+        <argsstring></argsstring>
+        <name>HEADERBITLEN</name>
+        <initializer> 32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="83" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1afc707d75cf005add74fc5edc8a447ab6" prot="private" static="no" mutable="no">
+        <type>gr_msg_queue_sptr</type>
+        <definition>gr_msg_queue_sptr gtlib_framer_sink_2::d_target_queue</definition>
+        <argsstring></argsstring>
+        <name>d_target_queue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="85" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a1e611888a7afc252ad4f1bb3e8b39db8" prot="private" static="no" mutable="no">
+        <type>state_t</type>
+        <definition>state_t gtlib_framer_sink_2::d_state</definition>
+        <argsstring></argsstring>
+        <name>d_state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="86" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1af4d59a33a26acea705d814be2bdb81e3" prot="private" static="no" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int gtlib_framer_sink_2::d_header</definition>
+        <argsstring></argsstring>
+        <name>d_header</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="87" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a628cd7bf76561fbe3923abfeebc77224" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gtlib_framer_sink_2::d_headerbitlen_cnt</definition>
+        <argsstring></argsstring>
+        <name>d_headerbitlen_cnt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="88" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a609df685173029cbc65efbd260c08a63" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool gtlib_framer_sink_2::d_complementary_header</definition>
+        <argsstring></argsstring>
+        <name>d_complementary_header</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="90" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1abe47ba45baffdb779df2475843d82e59" prot="private" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char gtlib_framer_sink_2::d_packet[MAX_PKT_LEN]</definition>
+        <argsstring>[MAX_PKT_LEN]</argsstring>
+        <name>d_packet</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="92" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a49cbb52713e5c170628107ac33048b86" prot="private" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char gtlib_framer_sink_2::d_packet_byte</definition>
+        <argsstring></argsstring>
+        <name>d_packet_byte</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="93" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a108a155704fe9e39e97a6a28b5f5090e" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gtlib_framer_sink_2::d_packet_byte_index</definition>
+        <argsstring></argsstring>
+        <name>d_packet_byte_index</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="94" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a9bc49eb6c143c8bb6555da013e740a45" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gtlib_framer_sink_2::d_packetlen</definition>
+        <argsstring></argsstring>
+        <name>d_packetlen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="95" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a88630a79b49a36ec72a3f56381c8095e" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gtlib_framer_sink_2::d_packet_whitener_offset</definition>
+        <argsstring></argsstring>
+        <name>d_packet_whitener_offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="96" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a51a35ddd5b7f932e872d00b3a7cea74a" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gtlib_framer_sink_2::d_packetlen_cnt</definition>
+        <argsstring></argsstring>
+        <name>d_packetlen_cnt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="97" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a63df680ec4858daffcbd3dc98111d67c" prot="private" static="no" mutable="no">
+        <type>unsigned long int</type>
+        <definition>unsigned long int gtlib_framer_sink_2::d_signal_power</definition>
+        <argsstring></argsstring>
+        <name>d_signal_power</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="98" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1aecb6b32112570bfa02cdff4bfcc2fcfb" prot="private" static="no" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int gtlib_framer_sink_2::d_scsf_wait</definition>
+        <argsstring></argsstring>
+        <name>d_scsf_wait</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="100" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a7b4e26881802ae4c0c11c778a4075626" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double gtlib_framer_sink_2::d_wlsq_sps</definition>
+        <argsstring></argsstring>
+        <name>d_wlsq_sps</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="102" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a2b116537614cfbdb66540175ddd71d6e" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double gtlib_framer_sink_2::d_wlsq_toa</definition>
+        <argsstring></argsstring>
+        <name>d_wlsq_toa</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="103" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a8cefcf67d96a2ed6f3a436d7016caf45" prot="private" static="no" mutable="no">
+        <type>unsigned long int</type>
+        <definition>unsigned long int gtlib_framer_sink_2::avg_rssi_count</definition>
+        <argsstring></argsstring>
+        <name>avg_rssi_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="105" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1aaa9481a572a246134390ea2c1e627b89" prot="private" static="no" mutable="no">
+        <type>unsigned long long int</type>
+        <definition>unsigned long long int gtlib_framer_sink_2::cum_rssi</definition>
+        <argsstring></argsstring>
+        <name>cum_rssi</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="106" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1aac69fe4645595b69518f27255dff047f" prot="private" static="no" mutable="no">
+        <type>unsigned long long int</type>
+        <definition>unsigned long long int gtlib_framer_sink_2::cum_noise</definition>
+        <argsstring></argsstring>
+        <name>cum_noise</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="107" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1ad3c9230f0b332b63926daec56370b24e" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gtlib_framer_sink_2::d_sfo</definition>
+        <argsstring></argsstring>
+        <name>d_sfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="109" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1ae7286094d993cd6f9b6b36cf77a911ad" prot="private" static="no" mutable="no">
+        <type><ref refid="structt__wlsq__stack" kindref="compound">t_wlsq_stack</ref></type>
+        <definition>t_wlsq_stack gtlib_framer_sink_2::d_wlsq_track</definition>
+        <argsstring></argsstring>
+        <name>d_wlsq_track</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="111" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a9ba3c859cee2e5beea57105ca96fee4f" prot="private" static="no" mutable="no">
+        <type><ref refid="structt__pktmeta" kindref="compound">t_pktmeta</ref></type>
+        <definition>t_pktmeta gtlib_framer_sink_2::d_pktmeta[1024]</definition>
+        <argsstring>[1024]</argsstring>
+        <name>d_pktmeta</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="112" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a31443f0aa87c5751e56fd09fe10a21f2" prot="private" static="no" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int gtlib_framer_sink_2::prev_symbol</definition>
+        <argsstring></argsstring>
+        <name>prev_symbol</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="114" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__framer__sink__2_1a12aa4291ae03ae1531a2018833df0f0c" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long gtlib_framer_sink_2::d_pktmeta_idx</definition>
+        <argsstring></argsstring>
+        <name>d_pktmeta_idx</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="115" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classgtlib__framer__sink__2_1aa36ed902e81dc46f87b0c61c488e0ec4" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>friend __GR_ATTR_IMPORT <ref refid="gtlib__framer__sink__2_8h_1a569b7d4aa13c0dd1a72ba1953c7f1f5e" kindref="member">gtlib_framer_sink_2_sptr</ref></type>
+        <definition>__GR_ATTR_IMPORT gtlib_framer_sink_2_sptr gtlib_make_framer_sink_2</definition>
+        <argsstring>(int sfo, gr_msg_queue_sptr target_queue, bool complementary_header)</argsstring>
+        <name>gtlib_make_framer_sink_2</name>
+        <param>
+          <type>int</type>
+          <declname>sfo</declname>
+        </param>
+        <param>
+          <type>gr_msg_queue_sptr</type>
+          <declname>target_queue</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>complementary_header</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="76"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a8aa8c187be76b32895e173097ce32303" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gtlib_framer_sink_2::gtlib_framer_sink_2</definition>
+        <argsstring>(int sfo, gr_msg_queue_sptr target_queue, bool complementary_header)</argsstring>
+        <name>gtlib_framer_sink_2</name>
+        <param>
+          <type>int</type>
+          <declname>sfo</declname>
+        </param>
+        <param>
+          <type>gr_msg_queue_sptr</type>
+          <declname>target_queue</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>complementary_header</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="78"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a0a947f2026dc33b2b0245155b84bf79d" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gtlib_framer_sink_2::enter_search</definition>
+        <argsstring>()</argsstring>
+        <name>enter_search</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="118"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a1803961594fe8f54b7deb47ca08ae52a" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gtlib_framer_sink_2::enter_have_sync</definition>
+        <argsstring>()</argsstring>
+        <name>enter_have_sync</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="119"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a523f2f83514a6342ae5bb634ae533dfc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gtlib_framer_sink_2::enter_have_header</definition>
+        <argsstring>(int payload_len, int whitener_offset)</argsstring>
+        <name>enter_have_header</name>
+        <param>
+          <type>int</type>
+          <declname>payload_len</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>whitener_offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="120"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a691dca0a02e1a77e1eb4c887fcc91e76" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gtlib_framer_sink_2::enter_have_scsf_wait</definition>
+        <argsstring>(int payload_len, int whitener_offset, int length)</argsstring>
+        <name>enter_have_scsf_wait</name>
+        <param>
+          <type>int</type>
+          <declname>payload_len</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>whitener_offset</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="121"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a96882149fe119cccb17d446bcf78b96b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double gtlib_framer_sink_2::ull2dbl</definition>
+        <argsstring>(unsigned long long data)</argsstring>
+        <name>ull2dbl</name>
+        <param>
+          <type>unsigned long long</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1aeadceb6a840bb9ff25b52667b33895b2" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned long long</type>
+        <definition>unsigned long long gtlib_framer_sink_2::dbl2ull</definition>
+        <argsstring>(double data)</argsstring>
+        <name>dbl2ull</name>
+        <param>
+          <type>double</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="124"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a67c14f0b019a0e2ff1c65f84c2ddc5b2" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double gtlib_framer_sink_2::least_square</definition>
+        <argsstring>(void)</argsstring>
+        <name>least_square</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="126"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a1d77a3a5a2f429454c63f437b02fcf80" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool gtlib_framer_sink_2::header_ok</definition>
+        <argsstring>()</argsstring>
+        <name>header_ok</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="130" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="129" bodyend="138"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a6cd65e493272640171095ca14a422c6f" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void gtlib_framer_sink_2::header_payload</definition>
+        <argsstring>(int *len, int *offset)</argsstring>
+        <name>header_payload</name>
+        <param>
+          <type>int *</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="141" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="140" bodyend="147"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1ab2d091175d13be2db3ebdb167e68d21b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gtlib_framer_sink_2::work</definition>
+        <argsstring>(int noutput_items, gr_vector_const_void_star &amp;input_items, gr_vector_void_star &amp;output_items)</argsstring>
+        <name>work</name>
+        <param>
+          <type>int</type>
+          <declname>noutput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_const_void_star &amp;</type>
+          <declname>input_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_void_star &amp;</type>
+          <declname>output_items</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="153"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a55364a76703f32f3fca30a2ff5108167" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>unsigned int</type>
+        <definition>unsigned int gtlib_framer_sink_2::meta_header</definition>
+        <argsstring>(long idx)</argsstring>
+        <name>meta_header</name>
+        <param>
+          <type>long</type>
+          <declname>idx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="157" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="156" bodyend="159"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a651641eba7e3a539119319fb47d537f3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>unsigned long</type>
+        <definition>unsigned long gtlib_framer_sink_2::meta_rssi</definition>
+        <argsstring>(long idx)</argsstring>
+        <name>meta_rssi</name>
+        <param>
+          <type>long</type>
+          <declname>idx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="162" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="161" bodyend="164"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a4450dc11ac19302cdeb6102165cfbe05" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>unsigned long long</type>
+        <definition>unsigned long long gtlib_framer_sink_2::meta_rtg</definition>
+        <argsstring>(long idx)</argsstring>
+        <name>meta_rtg</name>
+        <param>
+          <type>long</type>
+          <declname>idx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="167" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="166" bodyend="169"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__framer__sink__2_1a933d791241c1c52c290a9d519fcbb4b4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double gtlib_framer_sink_2::meta_sps</definition>
+        <argsstring>(long idx)</argsstring>
+        <name>meta_sps</name>
+        <param>
+          <type>long</type>
+          <declname>idx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="172" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="171" bodyend="174"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Given a stream of bits and access_code flags, assemble packets.</para><para>input: stream of bytes from gr_correlate_access_code_bb output: none. Pushes assembled packet into target queue. </para>    </briefdescription>
+    <detaileddescription>
+<para>The framer expects a fixed length header of 2 16-bit shorts containing the payload length, followed by the payload. If the 2 16-bit shorts are not identical, this packet is ignored. Better algs are welcome.</para><para>The input data consists of bytes that have two bits used. Bit 0, the LSB, contains the data bit. Bit 1 if set, indicates that the corresponding bit is the the first bit of the packet. That is, this bit is the first one after the access code. </para>    </detaileddescription>
+    <collaborationgraph>
+      <node id="315">
+        <label>gtlib_framer_sink_2</label>
+        <link refid="classgtlib__framer__sink__2"/>
+        <childnode refid="316" relation="usage">
+          <edgelabel>d_pktmeta</edgelabel>
+        </childnode>
+        <childnode refid="317" relation="usage">
+          <edgelabel>d_wlsq_track</edgelabel>
+        </childnode>
+      </node>
+      <node id="317">
+        <label>t_wlsq_stack</label>
+        <link refid="structt__wlsq__stack"/>
+      </node>
+      <node id="316">
+        <label>t_pktmeta</label>
+        <link refid="structt__pktmeta"/>
+      </node>
+    </collaborationgraph>
+    <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="74" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="73" bodyend="176"/>
+    <listofallmembers>
+      <member refid="classgtlib__framer__sink__2_1a8cefcf67d96a2ed6f3a436d7016caf45" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>avg_rssi_count</name></member>
+      <member refid="classgtlib__framer__sink__2_1aac69fe4645595b69518f27255dff047f" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>cum_noise</name></member>
+      <member refid="classgtlib__framer__sink__2_1aaa9481a572a246134390ea2c1e627b89" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>cum_rssi</name></member>
+      <member refid="classgtlib__framer__sink__2_1a609df685173029cbc65efbd260c08a63" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_complementary_header</name></member>
+      <member refid="classgtlib__framer__sink__2_1af4d59a33a26acea705d814be2bdb81e3" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_header</name></member>
+      <member refid="classgtlib__framer__sink__2_1a628cd7bf76561fbe3923abfeebc77224" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_headerbitlen_cnt</name></member>
+      <member refid="classgtlib__framer__sink__2_1abe47ba45baffdb779df2475843d82e59" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_packet</name></member>
+      <member refid="classgtlib__framer__sink__2_1a49cbb52713e5c170628107ac33048b86" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_packet_byte</name></member>
+      <member refid="classgtlib__framer__sink__2_1a108a155704fe9e39e97a6a28b5f5090e" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_packet_byte_index</name></member>
+      <member refid="classgtlib__framer__sink__2_1a88630a79b49a36ec72a3f56381c8095e" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_packet_whitener_offset</name></member>
+      <member refid="classgtlib__framer__sink__2_1a9bc49eb6c143c8bb6555da013e740a45" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_packetlen</name></member>
+      <member refid="classgtlib__framer__sink__2_1a51a35ddd5b7f932e872d00b3a7cea74a" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_packetlen_cnt</name></member>
+      <member refid="classgtlib__framer__sink__2_1a9ba3c859cee2e5beea57105ca96fee4f" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_pktmeta</name></member>
+      <member refid="classgtlib__framer__sink__2_1a12aa4291ae03ae1531a2018833df0f0c" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_pktmeta_idx</name></member>
+      <member refid="classgtlib__framer__sink__2_1aecb6b32112570bfa02cdff4bfcc2fcfb" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_scsf_wait</name></member>
+      <member refid="classgtlib__framer__sink__2_1ad3c9230f0b332b63926daec56370b24e" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_sfo</name></member>
+      <member refid="classgtlib__framer__sink__2_1a63df680ec4858daffcbd3dc98111d67c" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_signal_power</name></member>
+      <member refid="classgtlib__framer__sink__2_1a1e611888a7afc252ad4f1bb3e8b39db8" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_state</name></member>
+      <member refid="classgtlib__framer__sink__2_1afc707d75cf005add74fc5edc8a447ab6" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_target_queue</name></member>
+      <member refid="classgtlib__framer__sink__2_1a7b4e26881802ae4c0c11c778a4075626" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_wlsq_sps</name></member>
+      <member refid="classgtlib__framer__sink__2_1a2b116537614cfbdb66540175ddd71d6e" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_wlsq_toa</name></member>
+      <member refid="classgtlib__framer__sink__2_1ae7286094d993cd6f9b6b36cf77a911ad" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>d_wlsq_track</name></member>
+      <member refid="classgtlib__framer__sink__2_1aeadceb6a840bb9ff25b52667b33895b2" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>dbl2ull</name></member>
+      <member refid="classgtlib__framer__sink__2_1a523f2f83514a6342ae5bb634ae533dfc" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>enter_have_header</name></member>
+      <member refid="classgtlib__framer__sink__2_1a691dca0a02e1a77e1eb4c887fcc91e76" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>enter_have_scsf_wait</name></member>
+      <member refid="classgtlib__framer__sink__2_1a1803961594fe8f54b7deb47ca08ae52a" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>enter_have_sync</name></member>
+      <member refid="classgtlib__framer__sink__2_1a0a947f2026dc33b2b0245155b84bf79d" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>enter_search</name></member>
+      <member refid="classgtlib__framer__sink__2_1a8aa8c187be76b32895e173097ce32303" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>gtlib_framer_sink_2</name></member>
+      <member refid="classgtlib__framer__sink__2_1aa36ed902e81dc46f87b0c61c488e0ec4" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>gtlib_make_framer_sink_2</name></member>
+      <member refid="classgtlib__framer__sink__2_1a1d77a3a5a2f429454c63f437b02fcf80" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>header_ok</name></member>
+      <member refid="classgtlib__framer__sink__2_1a6cd65e493272640171095ca14a422c6f" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>header_payload</name></member>
+      <member refid="classgtlib__framer__sink__2_1a76f87e34acea63b437d2dfbab24ca023" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>HEADERBITLEN</name></member>
+      <member refid="classgtlib__framer__sink__2_1a67c14f0b019a0e2ff1c65f84c2ddc5b2" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>least_square</name></member>
+      <member refid="classgtlib__framer__sink__2_1a2973ecfb4980bd926070f5a57c6f6a68" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>MAX_PKT_LEN</name></member>
+      <member refid="classgtlib__framer__sink__2_1a55364a76703f32f3fca30a2ff5108167" prot="public" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>meta_header</name></member>
+      <member refid="classgtlib__framer__sink__2_1a651641eba7e3a539119319fb47d537f3" prot="public" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>meta_rssi</name></member>
+      <member refid="classgtlib__framer__sink__2_1a4450dc11ac19302cdeb6102165cfbe05" prot="public" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>meta_rtg</name></member>
+      <member refid="classgtlib__framer__sink__2_1a933d791241c1c52c290a9d519fcbb4b4" prot="public" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>meta_sps</name></member>
+      <member refid="classgtlib__framer__sink__2_1a31443f0aa87c5751e56fd09fe10a21f2" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>prev_symbol</name></member>
+      <member refid="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6fadc0f913b11a86b04dc227a937a06e246" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>STATE_HAVE_HEADER</name></member>
+      <member refid="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6fac76c7cbeae605b2773e96e18f5cf10b3" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>STATE_HAVE_SCSF_WAIT</name></member>
+      <member refid="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6fa9042ec4e4121b249fc2e764d9c16250e" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>STATE_HAVE_SYNC</name></member>
+      <member refid="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6fac74e9bb3a622abd9c57c331cd62f750d" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>STATE_SYNC_SEARCH</name></member>
+      <member refid="classgtlib__framer__sink__2_1a5aeb6b3fa4847ed8b5d1d2231b306f6f" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>state_t</name></member>
+      <member refid="classgtlib__framer__sink__2_1a96882149fe119cccb17d446bcf78b96b" prot="private" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>ull2dbl</name></member>
+      <member refid="classgtlib__framer__sink__2_1ab2d091175d13be2db3ebdb167e68d21b" prot="public" virt="non-virtual"><scope>gtlib_framer_sink_2</scope><name>work</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.6.3">
+  <compounddef id="classgtlib__receiver__monitor" kind="class" prot="public">
+    <compoundname>gtlib_receiver_monitor</compoundname>
+    <includes refid="gtlib__receiver__monitor_8h" local="no">gtlib_receiver_monitor.h</includes>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classgtlib__receiver__monitor_1a9d1e7117a4d95d843de4cd211bb3bac2" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>friend __GR_ATTR_IMPORT <ref refid="gtlib__receiver__monitor_8h_1ae9b2cc5edef9f2e7b44d3757105f6039" kindref="member">gtlib_receiver_monitor_sptr</ref></type>
+        <definition>__GR_ATTR_IMPORT gtlib_receiver_monitor_sptr gtlib_make_receiver_monitor</definition>
+        <argsstring>()</argsstring>
+        <name>gtlib_make_receiver_monitor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_receiver_monitor.h" line="38"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classgtlib__receiver__monitor_1a8ed343cad0640ba87e1ae9cf0fc8edc0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gtlib_receiver_monitor::gtlib_receiver_monitor</definition>
+        <argsstring>()</argsstring>
+        <name>gtlib_receiver_monitor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_receiver_monitor.h" line="40"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classgtlib__receiver__monitor_1a0ca79828a2023c2d42fec273dcfbb5f4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gtlib_receiver_monitor::~gtlib_receiver_monitor</definition>
+        <argsstring>()</argsstring>
+        <name>~gtlib_receiver_monitor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_receiver_monitor.h" line="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__receiver__monitor_1a667b09a48eacc1bb888704253849f2fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gtlib_receiver_monitor::general_work</definition>
+        <argsstring>(int noutput_items, gr_vector_int &amp;ninput_items, gr_vector_const_void_star &amp;input_items, gr_vector_void_star &amp;output_items)</argsstring>
+        <name>general_work</name>
+        <param>
+          <type>int</type>
+          <declname>noutput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_int &amp;</type>
+          <declname>ninput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_const_void_star &amp;</type>
+          <declname>input_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_void_star &amp;</type>
+          <declname>output_items</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_receiver_monitor.h" line="49"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>&lt;+description+&gt; </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/opt/gr-gtlib/include/gtlib_receiver_monitor.h" line="37" bodyfile="/opt/gr-gtlib/include/gtlib_receiver_monitor.h" bodystart="36" bodyend="50"/>
+    <listofallmembers>
+      <member refid="classgtlib__receiver__monitor_1a667b09a48eacc1bb888704253849f2fa" prot="public" virt="non-virtual"><scope>gtlib_receiver_monitor</scope><name>general_work</name></member>
+      <member refid="classgtlib__receiver__monitor_1a9d1e7117a4d95d843de4cd211bb3bac2" prot="private" virt="non-virtual"><scope>gtlib_receiver_monitor</scope><name>gtlib_make_receiver_monitor</name></member>
+      <member refid="classgtlib__receiver__monitor_1a8ed343cad0640ba87e1ae9cf0fc8edc0" prot="private" virt="non-virtual"><scope>gtlib_receiver_monitor</scope><name>gtlib_receiver_monitor</name></member>
+      <member refid="classgtlib__receiver__monitor_1a0ca79828a2023c2d42fec273dcfbb5f4" prot="public" virt="non-virtual"><scope>gtlib_receiver_monitor</scope><name>~gtlib_receiver_monitor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -12,6 +12,7 @@
 #include "gtlib_bfsk_modulator_fc.h"
 #include "gtlib_ncbfsk_freq_diversity.h"
 #include "gtlib_framer_sink_2.h"
+#include "gtlib_receiver_monitor.h"
 %}
 
 
@@ -22,3 +23,6 @@ GR_SWIG_BLOCK_MAGIC(gtlib,ncbfsk_freq_diversity);
 
 GR_SWIG_BLOCK_MAGIC(gtlib,framer_sink_2);
 %include "gtlib_framer_sink_2.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,receiver_monitor);
+%include "gtlib_receiver_monitor.h"

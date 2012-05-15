@@ -24,6 +24,7 @@ from gnuradio import gr, gru
 from gnuradio import eng_notation
 from gnuradio import digital
 
+import gtlib
 import copy
 import sys
 
@@ -80,18 +81,16 @@ class receive_path(gr.hier_block2):
         thresh = 30   # in dB, will have to adjust
         self.probe = gr.probe_avg_mag_sqrd_c(thresh,alpha)
 
+        self.rxmon = gtlib.receiver_monitor()
+        self.dummy = gr.null_sink(8)
+        
         # Display some information about the setup
         if self._verbose:
             self._print_verbage()
 
-	# connect block input to channel filter
-	self.connect(self, self.channel_filter)
-
-        # connect the channel input filter to the carrier power detector
-        self.connect(self.channel_filter, self.probe)
-
-        # connect channel filter to the packet receiver
-        self.connect(self.channel_filter, self.packet_receiver)
+        # connect block input to channel filter
+        self.connect(self, self.channel_filter, self.packet_receiver)
+        self.connect(self, self.rxmon, self.dummy)
 
     def bitrate(self):
         return self._bitrate

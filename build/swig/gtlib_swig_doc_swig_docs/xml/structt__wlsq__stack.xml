@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.6.3">
+  <compounddef id="structt__wlsq__stack" kind="struct" prot="public">
+    <compoundname>t_wlsq_stack</compoundname>
+    <includes refid="gtlib__framer__sink__2_8h" local="no">gtlib_framer_sink_2.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structt__wlsq__stack_1a9e35b0aca6ab3de4fd31bd0b3a7e8a50" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int t_wlsq_stack::index</definition>
+        <argsstring></argsstring>
+        <name>index</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="46" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structt__wlsq__stack_1a30091d8bc1277110afd462e3bfdb4708" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int t_wlsq_stack::bit_cnt</definition>
+        <argsstring></argsstring>
+        <name>bit_cnt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="47" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structt__wlsq__stack_1a73ecab1040b348c9733a8e227235aa31" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double t_wlsq_stack::stack[4096 *4]</definition>
+        <argsstring>[4096 *4]</argsstring>
+        <name>stack</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="48" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structt__wlsq__stack_1a85a9b8e0cc0fdc48a92b97987980c515" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int t_wlsq_stack::bit[4096 *4]</definition>
+        <argsstring>[4096 *4]</argsstring>
+        <name>bit</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="49" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="45" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="45" bodyend="50"/>
+    <listofallmembers>
+      <member refid="structt__wlsq__stack_1a85a9b8e0cc0fdc48a92b97987980c515" prot="public" virt="non-virtual"><scope>t_wlsq_stack</scope><name>bit</name></member>
+      <member refid="structt__wlsq__stack_1a30091d8bc1277110afd462e3bfdb4708" prot="public" virt="non-virtual"><scope>t_wlsq_stack</scope><name>bit_cnt</name></member>
+      <member refid="structt__wlsq__stack_1a9e35b0aca6ab3de4fd31bd0b3a7e8a50" prot="public" virt="non-virtual"><scope>t_wlsq_stack</scope><name>index</name></member>
+      <member refid="structt__wlsq__stack_1a73ecab1040b348c9733a8e227235aa31" prot="public" virt="non-virtual"><scope>t_wlsq_stack</scope><name>stack</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

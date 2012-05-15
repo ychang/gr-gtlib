@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC -O3 -DNDEBUG  -shared -Wl,-soname,_gtlib_swig.so -o _gtlib_swig.so CMakeFiles/_gtlib_swig.dir/gtlib_swigPYTHON_wrap.cxx.o -lpython2.6 ../lib/libgnuradio-gtlib.so /usr/local/lib/libgruel.so /usr/local/lib/libgnuradio-core.so -Wl,-rpath,/opt/gr-gtlib/build/lib:/usr/local/lib: 

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.6.3">
+  <compounddef id="structt__pktmeta" kind="struct" prot="public">
+    <compoundname>t_pktmeta</compoundname>
+    <includes refid="gtlib__framer__sink__2_8h" local="no">gtlib_framer_sink_2.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structt__pktmeta_1ae88137e1ba5a0c5b23fbdf91f02fac83" prot="public" static="no" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int t_pktmeta::header</definition>
+        <argsstring></argsstring>
+        <name>header</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="38" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structt__pktmeta_1a8a2d25291694d4fa5e1ba99777a818dd" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long t_pktmeta::rssi</definition>
+        <argsstring></argsstring>
+        <name>rssi</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="39" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structt__pktmeta_1aca9c0b9179c4ac23bf29d016f7956b0c" prot="public" static="no" mutable="no">
+        <type>unsigned long long</type>
+        <definition>unsigned long long t_pktmeta::rtg</definition>
+        <argsstring></argsstring>
+        <name>rtg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="40" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structt__pktmeta_1aac0a377114b19c96f62b631a58829689" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double t_pktmeta::sps</definition>
+        <argsstring></argsstring>
+        <name>sps</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="41" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" line="37" bodyfile="/opt/gr-gtlib/include/gtlib_framer_sink_2.h" bodystart="37" bodyend="42"/>
+    <listofallmembers>
+      <member refid="structt__pktmeta_1ae88137e1ba5a0c5b23fbdf91f02fac83" prot="public" virt="non-virtual"><scope>t_pktmeta</scope><name>header</name></member>
+      <member refid="structt__pktmeta_1a8a2d25291694d4fa5e1ba99777a818dd" prot="public" virt="non-virtual"><scope>t_pktmeta</scope><name>rssi</name></member>
+      <member refid="structt__pktmeta_1aca9c0b9179c4ac23bf29d016f7956b0c" prot="public" virt="non-virtual"><scope>t_pktmeta</scope><name>rtg</name></member>
+      <member refid="structt__pktmeta_1aac0a377114b19c96f62b631a58829689" prot="public" virt="non-virtual"><scope>t_pktmeta</scope><name>sps</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

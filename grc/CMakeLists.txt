@@ -19,5 +19,6 @@
 install(FILES
     gtlib_bfsk_modulator_fc.xml
     gtlib_ncbfsk_freq_diversity.xml
-    gtlib_framer_sink_2.xml DESTINATION share/gnuradio/grc/blocks
+    gtlib_framer_sink_2.xml
+    gtlib_receiver_monitor.xml DESTINATION share/gnuradio/grc/blocks
 )

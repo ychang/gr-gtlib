@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.6.3">
+  <compounddef id="classgtlib__bfsk__modulator__fc" kind="class" prot="public">
+    <compoundname>gtlib_bfsk_modulator_fc</compoundname>
+    <includes refid="gtlib__bfsk__modulator__fc_8h" local="no">gtlib_bfsk_modulator_fc.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classgtlib__bfsk__modulator__fc_1ac0e22cc135c1b512358802747b52b5fa" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double gtlib_bfsk_modulator_fc::d_sensitivity_a</definition>
+        <argsstring></argsstring>
+        <name>d_sensitivity_a</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" line="42" bodyfile="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__bfsk__modulator__fc_1a74ca10cc7967eff4a40427e2a4786264" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double gtlib_bfsk_modulator_fc::d_sensitivity_b</definition>
+        <argsstring></argsstring>
+        <name>d_sensitivity_b</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" line="43" bodyfile="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgtlib__bfsk__modulator__fc_1a0d9172ed3d8ea0f9e41f52aba9df5663" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double gtlib_bfsk_modulator_fc::d_phase</definition>
+        <argsstring></argsstring>
+        <name>d_phase</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" line="44" bodyfile="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classgtlib__bfsk__modulator__fc_1aee7134205ab14c2097a75a462e94ec6a" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>friend __GR_ATTR_IMPORT <ref refid="gtlib__bfsk__modulator__fc_8h_1a7c701545418618ac7739c52be6723f13" kindref="member">gtlib_bfsk_modulator_fc_sptr</ref></type>
+        <definition>__GR_ATTR_IMPORT gtlib_bfsk_modulator_fc_sptr gtlib_make_bfsk_modulator_fc</definition>
+        <argsstring>(double sensitivity_a, double sensitivity_b)</argsstring>
+        <name>gtlib_make_bfsk_modulator_fc</name>
+        <param>
+          <type>double</type>
+          <declname>sensitivity_a</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>sensitivity_b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" line="47"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classgtlib__bfsk__modulator__fc_1a97e3a37f2148080fdc679051e3f235a9" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gtlib_bfsk_modulator_fc::gtlib_bfsk_modulator_fc</definition>
+        <argsstring>(double sensitivity_a, double sensitivity_b)</argsstring>
+        <name>gtlib_bfsk_modulator_fc</name>
+        <param>
+          <type>double</type>
+          <declname>sensitivity_a</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>sensitivity_b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" line="49"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classgtlib__bfsk__modulator__fc_1a52f620821c9435ff97b3ddd6946beeb0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gtlib_bfsk_modulator_fc::set_sensitivity</definition>
+        <argsstring>(double sensitivity_a, double sensitivity_b)</argsstring>
+        <name>set_sensitivity</name>
+        <param>
+          <type>double</type>
+          <declname>sensitivity_a</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>sensitivity_b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" line="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classgtlib__bfsk__modulator__fc_1af8368e378067bb43b635e83979f2a974" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gtlib_bfsk_modulator_fc::work</definition>
+        <argsstring>(int noutput_items, gr_vector_const_void_star &amp;input_items, gr_vector_void_star &amp;output_items)</argsstring>
+        <name>work</name>
+        <param>
+          <type>int</type>
+          <declname>noutput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_const_void_star &amp;</type>
+          <declname>input_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_void_star &amp;</type>
+          <declname>output_items</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" line="55"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Frequency modulator block</para><para>float input; complex baseband output. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" line="41" bodyfile="/opt/gr-gtlib/include/gtlib_bfsk_modulator_fc.h" bodystart="40" bodyend="56"/>
+    <listofallmembers>
+      <member refid="classgtlib__bfsk__modulator__fc_1a0d9172ed3d8ea0f9e41f52aba9df5663" prot="private" virt="non-virtual"><scope>gtlib_bfsk_modulator_fc</scope><name>d_phase</name></member>
+      <member refid="classgtlib__bfsk__modulator__fc_1ac0e22cc135c1b512358802747b52b5fa" prot="private" virt="non-virtual"><scope>gtlib_bfsk_modulator_fc</scope><name>d_sensitivity_a</name></member>
+      <member refid="classgtlib__bfsk__modulator__fc_1a74ca10cc7967eff4a40427e2a4786264" prot="private" virt="non-virtual"><scope>gtlib_bfsk_modulator_fc</scope><name>d_sensitivity_b</name></member>
+      <member refid="classgtlib__bfsk__modulator__fc_1a97e3a37f2148080fdc679051e3f235a9" prot="private" virt="non-virtual"><scope>gtlib_bfsk_modulator_fc</scope><name>gtlib_bfsk_modulator_fc</name></member>
+      <member refid="classgtlib__bfsk__modulator__fc_1aee7134205ab14c2097a75a462e94ec6a" prot="private" virt="non-virtual"><scope>gtlib_bfsk_modulator_fc</scope><name>gtlib_make_bfsk_modulator_fc</name></member>
+      <member refid="classgtlib__bfsk__modulator__fc_1a52f620821c9435ff97b3ddd6946beeb0" prot="public" virt="non-virtual"><scope>gtlib_bfsk_modulator_fc</scope><name>set_sensitivity</name></member>
+      <member refid="classgtlib__bfsk__modulator__fc_1af8368e378067bb43b635e83979f2a974" prot="public" virt="non-virtual"><scope>gtlib_bfsk_modulator_fc</scope><name>work</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

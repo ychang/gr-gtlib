@@ -22,6 +22,7 @@
 #include "config.h"
 #endif
 
+#include <stdio.h>
 #include <gr_io_signature.h>
 #include <gtlib_receiver_monitor.h>
 
@@ -35,8 +36,8 @@ gtlib_make_receiver_monitor ()
 
 gtlib_receiver_monitor::gtlib_receiver_monitor ()
 	: gr_block ("receiver_monitor",
-		gr_make_io_signature (<+MIN_IN+>, <+MAX_IN+>, sizeof (<+float+>)),
-		gr_make_io_signature (<+MIN_IN+>, <+MAX_IN+>, sizeof (<+float+>)))
+		gr_make_io_signature (1, 1, sizeof (gr_complex)),
+		gr_make_io_signature (1, 1, sizeof (gr_complex)))
 {
 }
 
@@ -52,8 +53,10 @@ gtlib_receiver_monitor::general_work (int noutput_items,
 			       gr_vector_const_void_star &input_items,
 			       gr_vector_void_star &output_items)
 {
-  const float *in = (const float *) input_items[0];
-  float *out = (float *) output_items[0];
+  const gr_complex *in = (const gr_complex *) input_items[0];
+  gr_complex *out = (gr_complex *) output_items[0];
+
+  fprintf(stderr,">>> [RxMon] noutput_items=%d\n",noutput_items);
 
   // Tell runtime system how many input items we consumed on
   // each input stream.
