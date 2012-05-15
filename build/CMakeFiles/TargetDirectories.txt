@@ -1,8 +1,0 @@
-/opt/gr-gtlib/build/swig/CMakeFiles/_gtlib_swig.dir
-/opt/gr-gtlib/build/swig/CMakeFiles/_gtlib_swig_doc_tag.dir
-/opt/gr-gtlib/build/swig/CMakeFiles/_gtlib_swig_swig_tag.dir
-/opt/gr-gtlib/build/lib/CMakeFiles/gnuradio-gtlib.dir
-/opt/gr-gtlib/build/apps/CMakeFiles/pygen_apps_9a6dd.dir
-/opt/gr-gtlib/build/python/CMakeFiles/pygen_python_17c61.dir
-/opt/gr-gtlib/build/swig/CMakeFiles/pygen_swig_85a6b.dir
-/opt/gr-gtlib/build/CMakeFiles/uninstall.dir
