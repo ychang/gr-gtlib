@@ -21,6 +21,7 @@
 #ifndef INCLUDED_GTLIB_RECEIVER_MONITOR_H
 #define INCLUDED_GTLIB_RECEIVER_MONITOR_H
 
+#include <time.h>
 #include <gtlib_api.h>
 #include <gr_block.h>
 
@@ -42,6 +43,7 @@ class GTLIB_API gtlib_receiver_monitor : public gr_block
  public:
 	~gtlib_receiver_monitor ();
 
+      timespec initial_time;
 
   int general_work (int noutput_items,
 		    gr_vector_int &ninput_items,
