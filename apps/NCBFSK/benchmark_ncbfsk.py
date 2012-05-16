@@ -77,6 +77,7 @@ class cnAPP(cnProtocol):
         packet.metadata.scsf_value = None        
         packet.metadata.timetag = txtime
 
+        print ''
         print '[APP:Tx] Data requested @ ',txtime, payload
 
         self.parent.data_request(packet, self.parent.header_request(123456,765431))
