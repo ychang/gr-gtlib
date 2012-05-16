@@ -122,7 +122,7 @@ class transmit_path(gr.hier_block2):
         Sets the transmit amplitude sent to the USRP
         @param: ampl 0 <= ampl < 32768.  Try 8000
         """
-        self._tx_amplitude = max(0.0, min(ampl, 32767.0))
+        self._tx_amplitude = max(0.0, min(ampl, 1.0))
         
         # TODO
         self.amp.set_k(self._tx_amplitude)
@@ -223,7 +223,7 @@ class transmit_path(gr.hier_block2):
         """
         Adds transmitter-specific options to the Options Parser
         """
-        normal.add_option("", "--tx-amplitude", type="eng_float", default=12000, metavar="AMPL",
+        normal.add_option("", "--tx-amplitude", type="eng_float", default=0.5, metavar="AMPL",
                           help="set transmitter digital amplitude: 0 <= AMPL < 32768 [default=%default]")
         normal.add_option("", "--tx-power", type="eng_float", default=None, metavar="TXPOWER",
                           help="set transmitter power : -73 <= TX_POWER < 17 (dBm)[default=%default]")
