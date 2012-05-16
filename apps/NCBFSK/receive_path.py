@@ -206,6 +206,9 @@ class receive_path(gr.hier_block2):
 
         self._watcher = _queue_watcher_thread_demod_pkts_ncbfsk(self._rcvd_pktq, rx_callback, self._packet, self.ncbfsk_demod, self.framer_sink, self)
 
+        if options.log:
+            self.connect(self, gr.file_sink(8,'e100_samples.dat'))
+
     def set_gain(self, gain):
         """
         Sets the analog gain in the USRP
