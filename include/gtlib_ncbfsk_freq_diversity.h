@@ -62,7 +62,8 @@ class GTLIB_API gtlib_ncbfsk_freq_diversity : public gr_block
     float           mean_estimator(float *data);
     float           peak_estimator(float *data);
     void            config_timestamp(long timestamp_gap);
-    
+    timespec diff(timespec start, timespec end);
+    timespec initial_time;
 
 protected:
   gtlib_ncbfsk_freq_diversity (int sps,float gamma,const std::string &msequence_code, int threshold);

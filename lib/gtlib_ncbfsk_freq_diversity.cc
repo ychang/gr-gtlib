@@ -31,11 +31,15 @@
 #include <gri_mmse_fir_interpolator.h>
 #include <gr_count_bits.h>
 #include <stdexcept>
+#include <time.h>
+
+#define VERBOSE 0
 
 //#define d_spade_length 10
 #define min_value(a,b) ((a) < (b)) ? a : b
 
 //const int d_spade_index[]={10,14,17,18,21,30,38,39,40,50};
+
 
 // Public constructor
 
@@ -44,6 +48,9 @@ gtlib_make_ncbfsk_freq_diversity(int sps,float gamma,const std::string &msequenc
 {
   return gtlib_ncbfsk_freq_diversity_sptr (new gtlib_ncbfsk_freq_diversity (sps,gamma,msequence_code, threshold));
 }
+
+
+
 
 gtlib_ncbfsk_freq_diversity::gtlib_ncbfsk_freq_diversity (int sps,float gamma,const std::string &msequence_code, int threshold)
   : gr_block ("ncbfsk_freq_diversity",
@@ -70,6 +77,14 @@ gtlib_ncbfsk_freq_diversity::gtlib_ncbfsk_freq_diversity (int sps,float gamma,co
         //fprintf(stderr, "gr_correlate_msequence_code_bb: msequence_code is > 64 bits\n");
         throw std::out_of_range ("msequence_code is > 64 bits");
     }
+    
+    timespec current_time;
+
+    clock_gettime(CLOCK_REALTIME, &initial_time);
+    usleep(1000000);
+    clock_gettime(CLOCK_REALTIME, &current_time);
+    fprintf(stderr,"[NCBFSK] Time diff= %f\n", diff(initial_time,current_time).tv_sec + (float)(diff(initial_time,current_time).tv_nsec)/1000000000);
+
 
 }
 
@@ -84,6 +99,19 @@ gtlib_ncbfsk_freq_diversity::forecast(int noutput_items, gr_vector_int &ninput_i
   for (unsigned i=0; i < ninputs; i++)
     ninput_items_required[i] =
       (int) ceil((noutput_items * d_sps));
+}
+
+timespec gtlib_ncbfsk_freq_diversity::diff(timespec start, timespec end)
+{
+	timespec temp;
+	if ((end.tv_nsec-start.tv_nsec)<0) {
+		temp.tv_sec = end.tv_sec-start.tv_sec-1;
+		temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+	} else {
+		temp.tv_sec = end.tv_sec-start.tv_sec;
+		temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+	}
+	return temp;
 }
 
 inline int
@@ -345,6 +373,8 @@ gtlib_ncbfsk_freq_diversity::config_timestamp(long timestamp_gap)
     d_timestamp_gap = timestamp_gap;
 }
 
+
+
 static const int FUDGE = 64;
 
 // Core routine for NON-COHERENT BFSK DEMODULATION (Yong)
@@ -385,6 +415,20 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
     float           symbol[MAX_SPS];
     long long       ts_temp;
 
+    timespec current_time;
+    timespec time_diff;
+    
+    clock_gettime(CLOCK_REALTIME, &current_time);
+    time_diff = diff(initial_time,current_time);
+    
+    //printf("[NCBFSK] nitems=%d @ %ld.%09ld\n",noutput_items,time_diff.tv_sec,time_diff.tv_nsec );    
+    if (VERBOSE)
+    {
+        if (in[0] > 0.1)
+        {
+            printf("[NCBFSK] Above Th=%f\n",in[0]);    
+        }
+    }
     // Initialize sym_duration with two factors
     // d_window_size : Calculator margin coming from consume_each (ii-d_window_size)
  
@@ -436,6 +480,12 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
                             
                             SPADE_func(&spade_int,&spade_frac);
                             if(fabs(spade_frac)>1) { spade_frac = 0; }
+                            
+                            if (VERBOSE)
+                            {
+                                printf("[NCBFSK] A packet is detected.\r\n");
+                            }
+                            
 
                             /*
                             ts_temp = (unsigned long long)in_ts[ii+spade_int-d_sps];
