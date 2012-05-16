@@ -33,7 +33,7 @@
 #include <stdexcept>
 #include <time.h>
 
-#define VERBOSE 0
+#define VERBOSE 1
 
 //#define d_spade_length 10
 #define min_value(a,b) ((a) < (b)) ? a : b
@@ -422,6 +422,7 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
     time_diff = diff(initial_time,current_time);
     
     //printf("[NCBFSK] nitems=%d @ %ld.%09ld\n",noutput_items,time_diff.tv_sec,time_diff.tv_nsec );    
+   
     if (VERBOSE)
     {
         if (in[0] > 0.1)
@@ -483,7 +484,7 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
                             
                             if (VERBOSE)
                             {
-                                printf("[NCBFSK] A packet is detected.\r\n");
+                                printf("[NCBFSK] A packet is detected @ %ld.%09ld\n",time_diff.tv_sec,time_diff.tv_nsec );    );
                             }
                             
 
