@@ -94,7 +94,7 @@ class receive_path(gr.hier_block2):
 
         phase_1 = phase_2 = phase_3 = phase_4 = 0
 
-        self.amp = gr.multiply_const_cc(32768)
+        self.amp = gr.multiply_const_cc(10)
 
 
         sensitivity_1 = (2 *pi * 1) / self.n_filter_taps
