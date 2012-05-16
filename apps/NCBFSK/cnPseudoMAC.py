@@ -15,6 +15,8 @@ from cnProtocol     import *
 from constants      import *
 from cnPacket       import *
 
+import utils
+
 # Transmission Interval
 SEND_WITH_INTERVAL  = 0
 SEND_IMMEDIATELY    = 1
