@@ -94,6 +94,7 @@ class receive_path(gr.hier_block2):
 
         phase_1 = phase_2 = phase_3 = phase_4 = 0
 
+        self.amp = gr.multiply_const_cc(32768)
 
 
         sensitivity_1 = (2 *pi * 1) / self.n_filter_taps
@@ -166,6 +167,7 @@ class receive_path(gr.hier_block2):
         
         fs = gr.null_sink(gr.sizeof_float)
 
+        self.connect(self,self.amp)
 
         # Data Stream
 
@@ -173,23 +175,23 @@ class receive_path(gr.hier_block2):
 
         if self._order_of_subchannels > 0:
             print '>>> [Receive Path] Setup first subchannel'
-            self.connect(self,self.match_filter_1_a,self.abs_1_a,(self.adder_a,0))
-            self.connect(self,self.match_filter_1_b,self.abs_1_b,(self.adder_b,0))
+            self.connect(self.amp,self.match_filter_1_a,self.abs_1_a,(self.adder_a,0))
+            self.connect(self.amp,self.match_filter_1_b,self.abs_1_b,(self.adder_b,0))
         
         if self._order_of_subchannels > 1:
             print '>>> [Receive Path] Setup second subchannel'
-            self.connect(self,self.match_filter_2_a,self.abs_2_a,(self.adder_a,1))
-            self.connect(self,self.match_filter_2_b,self.abs_2_b,(self.adder_b,1))
+            self.connect(self.amp,self.match_filter_2_a,self.abs_2_a,(self.adder_a,1))
+            self.connect(self.amp,self.match_filter_2_b,self.abs_2_b,(self.adder_b,1))
         
         if self._order_of_subchannels > 2:
             print '>>> [Receive Path] Setup third subchannel'
-            self.connect(self,self.match_filter_3_a,self.abs_3_a,(self.adder_a,2))
-            self.connect(self,self.match_filter_3_b,self.abs_3_b,(self.adder_b,2))
+            self.connect(self.amp,self.match_filter_3_a,self.abs_3_a,(self.adder_a,2))
+            self.connect(self.amp,self.match_filter_3_b,self.abs_3_b,(self.adder_b,2))
         
         if self._order_of_subchannels > 3:
             print '>>> [Receive Path] Setup fourth subchannel'
-            self.connect(self,self.match_filter_4_a,self.abs_4_a,(self.adder_a,3))
-            self.connect(self,self.match_filter_4_b,self.abs_4_b,(self.adder_b,3))
+            self.connect(self.amp,self.match_filter_4_a,self.abs_4_a,(self.adder_a,3))
+            self.connect(self.amp,self.match_filter_4_b,self.abs_4_b,(self.adder_b,3))
         
         self.connect(self.adder_a,(self.sub,0))
         self.connect(self.adder_b,(self.sub,1))
