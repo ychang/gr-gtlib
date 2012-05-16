@@ -47,8 +47,8 @@ gtlib_make_ncbfsk_freq_diversity(int sps,float gamma,const std::string &msequenc
 
 gtlib_ncbfsk_freq_diversity::gtlib_ncbfsk_freq_diversity (int sps,float gamma,const std::string &msequence_code, int threshold)
   : gr_block ("ncbfsk_freq_diversity",
-	      gr_make_io_signature2 (1, 2, sizeof (unsigned long long), sizeof (float)),
-	      gr_make_io_signature2 (1, 2, sizeof (unsigned long long), sizeof (unsigned long))),
+	      gr_make_io_signature (1, 1, sizeof (float)),
+	      gr_make_io_signature (1, 1, sizeof (unsigned long))),
     d_sps (sps),d_gamma(gamma),
     d_data_reg(0), d_flag_reg(0), d_flag_bit(0), d_mask(0), d_timestamp(0), d_threshold(threshold)
 {
@@ -357,11 +357,11 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
 				       gr_vector_const_void_star &input_items,
 				       gr_vector_void_star &output_items)
 {
-    unsigned long long  *in_ts = (unsigned long long*) input_items[0];
-    unsigned long long  *out_ts = (unsigned long long*) output_items[0];
+    //unsigned long long  *in_ts = (unsigned long long*) input_items[0];
+    //unsigned long long  *out_ts = (unsigned long long*) output_items[0];
 
-    float           *in = (float *) input_items[1];   
-    unsigned long   *out = (unsigned long *) output_items[1];
+    float           *in = (float *) input_items[0];   
+    unsigned long   *out = (unsigned long *) output_items[0];
     
 
     //float *in_1 = (float *) input_items[1];
@@ -435,25 +435,25 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
                             d_locked = 1;
                             
                             SPADE_func(&spade_int,&spade_frac);
-
-                            //ts_temp = (unsigned long long)in_ts[ii+spade_int-d_sps]<<8;
-                            ts_temp = (unsigned long long)in_ts[ii+spade_int-d_sps];
-
                             if(fabs(spade_frac)>1) { spade_frac = 0; }
-                            
-                            ts_temp += (unsigned long long)floor((spade_frac*(float)d_timestamp_gap)+0.5);
-                            
-                            d_timestamp = (unsigned long long)ts_temp;
 
+                            /*
+                            ts_temp = (unsigned long long)in_ts[ii+spade_int-d_sps];
+                            ts_temp += (unsigned long long)floor((spade_frac*(float)d_timestamp_gap)+0.5);
+                            d_timestamp = (unsigned long long)ts_temp;
+                            */
+                            
                             ii+=(spade_int-(d_sps/2));
-                            d_prev_ts = in_ts[ii-1];
+
+
+                            //d_prev_ts = in_ts[ii-1];
                             
                             break;
                 default :   d_status = 0;
                             break;
             }
             out[oo] = (unsigned long)(d_locked<<1);
-            out_ts[oo] = (unsigned long long)d_timestamp;
+            //out_ts[oo] = (unsigned long long)d_timestamp;
             
         }
         else
@@ -486,12 +486,13 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
             
             if(fabs(d_fractional_control_factor)>1) { d_fractional_control_factor = 0; }
             
+            /*
             ts_temp = (unsigned long long)in_ts[ii-d_sps+d_max_idx];
             ts_temp += (unsigned long long)floor((d_fractional_control_factor*(float)d_timestamp_gap)+0.5);
             
             d_timestamp = (unsigned long long)ts_temp;
-
             out_ts[oo] = (unsigned long long)d_timestamp;   
+            */
 
         }
 

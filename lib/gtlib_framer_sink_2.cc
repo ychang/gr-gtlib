@@ -40,7 +40,7 @@ gtlib_make_framer_sink_2(int sfo,gr_msg_queue_sptr target_queue, bool complement
 
 gtlib_framer_sink_2::gtlib_framer_sink_2(int sfo,gr_msg_queue_sptr target_queue, bool complementary_header)
   : gr_sync_block ("framer_sink_2",
-		   gr_make_io_signature2 (1, 2, sizeof(unsigned long long), sizeof(unsigned long)),
+		   gr_make_io_signature (1, 1, sizeof(unsigned long)),
 		   gr_make_io_signature (0, 0, 0)),
            d_sfo(sfo),
            d_target_queue(target_queue),
@@ -162,8 +162,8 @@ gtlib_framer_sink_2::work (int noutput_items,
 			gr_vector_const_void_star &input_items,
 			gr_vector_void_star &output_items)
 {
-  unsigned long long *in_ts = (unsigned long long*) input_items[0];
-  const unsigned long *in_symbol = (const unsigned long *) input_items[1];
+  //unsigned long long *in_ts = (unsigned long long*) input_items[0];
+  const unsigned long *in_symbol = (const unsigned long *) input_items[0];
   //const unsigned long *in_noise = (const unsigned long *) input_items[2];
   int count=0;
     
@@ -192,13 +192,15 @@ gtlib_framer_sink_2::work (int noutput_items,
 	                    d_state = STATE_HAVE_SYNC;
                         d_header = 0;
                         d_headerbitlen_cnt = 0;
+
+                        /*
                         d_wlsq_track.index=0;
-                        
                         d_wlsq_track.stack[d_wlsq_track.index]=ull2dbl(in_ts[count]);                                            
                         d_wlsq_track.bit_cnt=0;
                         d_wlsq_track.bit[d_wlsq_track.index]=d_wlsq_track.bit_cnt;
                         d_wlsq_track.index++;	
                         prev_symbol = 0xFF;                    
+                        */
 	                    break;
 	                }
 	                count++;
@@ -215,7 +217,7 @@ gtlib_framer_sink_2::work (int noutput_items,
                     // ===================================================================
                     // GET WLSQ DATA
                     // ===================================================================
-                    
+                    /*
                     if((prev_symbol!=(in_symbol[count]&0x1)) && (prev_symbol!=0xFF)) 
                     {
                         d_wlsq_track.stack[d_wlsq_track.index]=ull2dbl(in_ts[count]);                                
@@ -223,6 +225,8 @@ gtlib_framer_sink_2::work (int noutput_items,
                         d_wlsq_track.index++;
                     }
                     d_wlsq_track.bit_cnt++;            
+
+                    */
 
                     prev_symbol = in_symbol[count]&0x1;
                     count++;
@@ -300,7 +304,7 @@ gtlib_framer_sink_2::work (int noutput_items,
                     // ===================================================================
                     // GET WLSQ DATA
                     // ===================================================================
-                    
+                    /*
                     if (d_wlsq_track.index < WLSQ_MAX)
                     {
                         if((prev_symbol!=(in_symbol[count]&0x1)) && (prev_symbol!=0xFF)) 
@@ -312,6 +316,7 @@ gtlib_framer_sink_2::work (int noutput_items,
                         d_wlsq_track.bit_cnt++;            
                     }
                     prev_symbol = in_symbol[count]&0x1;
+                    */
                     count++;
                     
                     rssi_temp = (in_symbol[count-1]>>2);
