@@ -484,7 +484,7 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
                             
                             if (VERBOSE)
                             {
-                                printf("[NCBFSK] A packet is detected @ %ld.%09ld\n",time_diff.tv_sec,time_diff.tv_nsec );    );
+                                printf("[NCBFSK] A packet is detected @ %ld.%09ld\n",time_diff.tv_sec,time_diff.tv_nsec ); 
                             }
                             
 
