@@ -101,9 +101,10 @@ class cnMAC(cnProtocol, Thread):
 
     def data_indication(self, payload, packet):
 
-        print '[MAC:Rx] Data Indicated : Length=',len(payload)
-        
         (l2header,l2payload) = cnMACHeader().construct(payload)
+
+        print '[MAC:Rx] H=',utils.ByteToHex(l2header.serialize()),'| P=',utils.ByteToHex(l2payload)
+        
         packet.popPDU(l2header)
         
         for ch in self.child:
@@ -119,7 +120,7 @@ class cnMAC(cnProtocol, Thread):
 
     def data_request(self,packet, l2header=None):
         
-        print '[MAC:Tx] Data requested : Header Length=',len(l2header.serialize()),' Payload Length=',len(packet.serialize())
+        print '[MAC:Tx] H=',utils.ByteToHex(l2header.serialize()),'| P=',utils.ByteToHex(packet.serialize())
 
         # Insert a UDP packet to the Packet class
         packet.pushPDU(l2header)
