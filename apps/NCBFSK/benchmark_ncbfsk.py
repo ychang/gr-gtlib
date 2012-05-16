@@ -54,8 +54,8 @@ class cnAPP(cnProtocol):
 
         self.symbol_duration = 1.0 / ( float(options.bitrate) * float(options.samples_per_symbol) )
         
-        print '[cnAPP] Protocol stack is created...' 
-        print '[cnAPP] Symbol duration=',self.symbol_duration
+        print '[APP] Protocol stack is created...' 
+        print '[APP] Symbol duration=',self.symbol_duration
 
         self.group_delay = {8:646.5, 16:1294.5, 32:2590.4765}
 
@@ -64,8 +64,9 @@ class cnAPP(cnProtocol):
 
     def data_indication(self, payload, packet):
         
-        print '[cnAPP]: P=',utils.ByteToHex(payload)
-
+        print '[APP:Rx] P=',utils.ByteToHex(payload)
+        print ''
+        
     def data_request(self, payload, txtime=None):
 
         packet = cnPacket()
@@ -76,7 +77,7 @@ class cnAPP(cnProtocol):
         packet.metadata.scsf_value = None        
         packet.metadata.timetag = txtime
 
-        print '[cnAPP] Data requested @ ',txtime, payload
+        print '[APP:Tx] Data requested @ ',txtime, payload
 
         self.parent.data_request(packet, self.parent.header_request(123456,765431))
         
