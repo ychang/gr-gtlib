@@ -425,7 +425,7 @@ gtlib_ncbfsk_freq_diversity::general_work (int noutput_items,
    
     if (VERBOSE)
     {
-        if (in[0] > 0.1)
+        if (in[0] > 0.0001)
         {
             printf("[NCBFSK] Above Th=%f\n",in[0]);    
         }
