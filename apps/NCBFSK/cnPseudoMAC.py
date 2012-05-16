@@ -81,7 +81,7 @@ class cnMAC(cnProtocol, Thread):
         self.interval = CNMAC_INTER_PKT_DELAY
         #self.start()
 
-        print '[cnMAC] Protocol stack is created...' 
+        print '[MAC] Protocol stack is created...' 
         
         pass
 
@@ -101,7 +101,7 @@ class cnMAC(cnProtocol, Thread):
 
     def data_indication(self, payload, packet):
 
-        print '<><>[cnMAC] Data Indicated : Length=',len(payload)
+        print '[MAC:Rx] Data Indicated : Length=',len(payload)
         
         (l2header,l2payload) = cnMACHeader().construct(payload)
         packet.popPDU(l2header)
@@ -119,7 +119,7 @@ class cnMAC(cnProtocol, Thread):
 
     def data_request(self,packet, l2header=None):
         
-        print '[cnMAC] Data requested : Header Length=',len(l2header.serialize()),' Payload Length=',len(packet.serialize())
+        print '[MAC:Tx] Data requested : Header Length=',len(l2header.serialize()),' Payload Length=',len(packet.serialize())
 
         # Insert a UDP packet to the Packet class
         packet.pushPDU(l2header)
@@ -128,7 +128,7 @@ class cnMAC(cnProtocol, Thread):
         
     def data_request2(self, data):
 
-        print '[cnMAC] Data requested : Length=',len(data)
+        print '[MAC:Tx] Data requested : Length=',len(data)
         metadata = cnMetaData()
         metadata.timetag = None
         metadata.freq_offset = 0

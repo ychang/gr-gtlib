@@ -134,7 +134,7 @@ class cnPHY(cnProtocol):
         
         self.open()        
 
-        print '>>> [cnPHY] Protocol stack is created...' 
+        print '[PHY] Protocol stack is created...' 
 
     def open(self):
         self.tb = my_top_block(self.data_indication, self.options)
@@ -157,15 +157,19 @@ class cnPHY(cnProtocol):
 
         # added by Haejoon 2011 12 18
         if packet.metadata.crc ==False:
+        
+            """
             print ' ###########################################'
             print ' ##### CRC Check Error in data_indication of cnPHY #####_____ Drop this packet'
             print ' ###########################################'
             print ' [PHY] =',utils.ByteToHex(payload)
+            
+            """
             return 
 
         (l1header,l1payload) = cnPHYHeader().construct(payload)
 
-        print '[cnPHY] RX: H=',utils.ByteToHex(l1header.serialize()),'| P=',utils.ByteToHex(l1payload)
+        print '[PHY:Rx] H=',utils.ByteToHex(l1header.serialize()),'| P=',utils.ByteToHex(l1payload)
 
         packet.popPDU(l1header)
         
@@ -182,7 +186,7 @@ class cnPHY(cnProtocol):
     #def data_request(self, payload='', header=None, metadata=None):
     def data_request(self, packet, l1header=None):
         
-        print '[cnPHY] TX: H=',utils.ByteToHex(l1header.serialize()),'| P=',utils.ByteToHex(packet.serialize())
+        print '[PHY:Tx] H=',utils.ByteToHex(l1header.serialize()),'| P=',utils.ByteToHex(packet.serialize())
         
         # Insert a UDP packet to the Packet class
         packet.pushPDU(l1header)
