@@ -180,7 +180,7 @@ def main():
         
             layer_7.data_request('12345678')
         
-            time.sleep(0.5)
+            time.sleep(0.2)
             
             trials = trials - 1
 
