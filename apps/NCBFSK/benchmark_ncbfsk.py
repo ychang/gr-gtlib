@@ -178,7 +178,7 @@ def main():
         
         while trials:
         
-            layer_7.data_request('12345678')
+            layer_7.data_request('12345678'*50)
         
             time.sleep(0.2)
             
