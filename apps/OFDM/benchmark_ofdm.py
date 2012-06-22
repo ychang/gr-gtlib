@@ -23,6 +23,7 @@
 from gnuradio import gr
 from gnuradio import eng_notation
 from gnuradio.eng_option import eng_option
+from gnuradio import digital
 from optparse import OptionParser
 
 import random, time, struct, sys, math, os
@@ -156,8 +157,8 @@ def main():
 
     transmit_path.add_options(parser, expert_grp)
     receive_path.add_options(parser, expert_grp)
-    blks2.ofdm_mod.add_options(parser, expert_grp)
-    blks2.ofdm_demod.add_options(parser, expert_grp)
+    digital.ofdm_mod.add_options(parser, expert_grp)
+    digital.ofdm_demod.add_options(parser, expert_grp)
     
     (options, args) = parser.parse_args ()
        
