@@ -62,7 +62,8 @@ class my_top_block(gr.top_block):
         self.zeros = gr.vector_source_c(z, True)
         self.txpath = transmit_path(options)
 
-        self.subcarrier_size = self.txpath._pkt_input.subcarrier_size() 
+        #self.subcarrier_size = self.txpath._pkt_input.subcarrier_size() 
+        self.subcarrier_size = 512
         
         # 4 bytes of Packet Length
         # 1 byte of whitener offset

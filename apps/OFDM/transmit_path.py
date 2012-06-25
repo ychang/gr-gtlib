@@ -29,6 +29,7 @@ import math
 
 import ofdm_packet_utils
 import ofdm
+import psk
 
 # /////////////////////////////////////////////////////////////////////////////
 #                              transmit path
@@ -55,17 +56,12 @@ class transmit_path(gr.hier_block2):
         self._cp_length = options.cp_length
 
         msgq_limit = 4
-        """
-        self.ofdm_tx = ofdm.ofdm_mod(options,
-                                        msgq_limit=4,
-                                        pad_for_usrp=False)
-        """
 
         win = [] #[1 for i in range(self._fft_length)]
 
         # Use freq domain to get doubled-up known symbol for correlation in time domain
         zeros_on_left = int(math.ceil((self._fft_length - self._occupied_tones)/2.0))
-        ksfreq = known_symbols_4512_3[0:self._occupied_tones]
+        ksfreq = ofdm.known_symbols_4512_3[0:self._occupied_tones]
         for i in range(len(ksfreq)):
             if((zeros_on_left + i) & 1):
                 ksfreq[i] = 0

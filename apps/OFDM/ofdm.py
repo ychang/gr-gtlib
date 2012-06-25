@@ -80,6 +80,8 @@ class ofdm_mod(gr.hier_block2):
             padded[zeros_on_left : zeros_on_left + self._occupied_tones] = pre
             padded_preambles.append(padded)
             
+        print padded_preambles
+        
         symbol_length = options.fft_length + options.cp_length
         
         mods = {"bpsk": 2, "qpsk": 4, "8psk": 8, "qam8": 8, "qam16": 16, "qam64": 64, "qam256": 256}
