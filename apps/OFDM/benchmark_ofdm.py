@@ -45,16 +45,18 @@ class my_top_block(gr.top_block):
             #noise_voltage = 0
             
             frequency_offset = options.frequency_offset / options.fft_length
+
+            if options.multipath_on:
+                #taps = [1.0, .2, 0.0, .1, .08, -.4, .12, -.2, 0, 0, 0, .3]
+                taps = [0.5,0.5]
+            else:
+                taps = [1.0, 0.0]
+
             if options.verbose:
                 print "Targeted SNR(dB): ",options.snr
                 print "Noise Amplitude: ", noise_voltage
                 print "Frequency offset: ", frequency_offset
-
-            if options.multipath_on:
-                taps = [1.0, .2, 0.0, .1, .08, -.4, .12, -.2, 0, 0, 0, .3]
-            else:
-                taps = [1.0, 0.0]
-
+                print "Taps: ",taps
         else:
             noise_voltage = 0.0
             frequency_offset = 0.0
