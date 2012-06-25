@@ -43,10 +43,12 @@ class my_top_block(gr.top_block):
             noise_power_in_channel = power_in_signal/SNR
             noise_voltage = math.sqrt(noise_power_in_channel/2.0)
             #noise_voltage = 0
-            print "Noise voltage: ", noise_voltage
-
+            
             frequency_offset = options.frequency_offset / options.fft_length
-            print "Frequency offset: ", frequency_offset
+            if options.verbose:
+                print "Targeted SNR(dB): ",options.snr
+                print "Noise Amplitude: ", noise_voltage
+                print "Frequency offset: ", frequency_offset
 
             if options.multipath_on:
                 taps = [1.0, .2, 0.0, .1, .08, -.4, .12, -.2, 0, 0, 0, .3]
@@ -62,7 +64,8 @@ class my_top_block(gr.top_block):
         self.zeros = gr.vector_source_c(z, True)
         self.txpath = transmit_path(options)
 
-        self.subcarrier_size = self.txpath._pkt_input.subcarrier_size() 
+        #self.subcarrier_size = self.txpath._pkt_input.subcarrier_size() 
+        self.subcarrier_size = 512
         
         # 4 bytes of Packet Length
         # 1 byte of whitener offset
@@ -72,12 +75,14 @@ class my_top_block(gr.top_block):
         # 1 set of Preamble
         samples_per_packet = (symbols_per_packet + 1) * (options.fft_length+options.cp_length)
 
+
+
         print "Symbols per Packet: ", symbols_per_packet
         print "Samples per Packet: ", samples_per_packet
 
 
         if options.discontinuous:
-            stream_size = [1, int(options.discontinuous*samples_per_packet)]
+            stream_size = [1000, int(options.discontinuous*samples_per_packet)]
         else:
             stream_size = [0, 100000]
 

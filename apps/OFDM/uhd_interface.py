@@ -45,7 +45,7 @@ class uhd_interface:
     def __init__(self, istx, args, bandwidth, freq=None,
                  gain=None, spec=None, antenna=None):
         
-        """
+        
         if(istx):
             self.u = uhd.usrp_sink(device_addr=args, stream_args=uhd.stream_args('fc32'))
         else:
@@ -55,6 +55,7 @@ class uhd_interface:
             self.u = uhd.usrp_sink(device_addr=args, stream_args=uhd.stream_args('sc16'))
         else:
             self.u = uhd.usrp_source(device_addr=args, stream_args=uhd.stream_args('sc16'))
+        """
         # Set the subdevice spec
         if(spec):
             self.u.set_subdev_spec(spec, 0)
