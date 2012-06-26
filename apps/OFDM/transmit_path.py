@@ -27,6 +27,7 @@ import copy
 import sys
 import math
 
+import gtlib
 import ofdm_packet_utils
 import ofdm
 import psk
@@ -78,7 +79,7 @@ class transmit_path(gr.hier_block2):
         symbol_length = options.fft_length + options.cp_length
         
         mods = {"bpsk": 2, "qpsk": 4, "8psk": 8, "qam8": 8, "qam16": 16, "qam64": 64, "qam256": 256}
-        arity = mods[self._modulation]
+        self.arity = mods[self._modulation]
         
         rot = 1
         if self._modulation == "qpsk":
@@ -86,10 +87,10 @@ class transmit_path(gr.hier_block2):
             
         # FIXME: pass the constellation objects instead of just the points
         if(self._modulation.find("psk") >= 0):
-            constel = psk.psk_constellation(arity)
+            constel = psk.psk_constellation(self.arity)
             rotated_const = map(lambda pt: pt * rot, constel.points())
         elif(self._modulation.find("qam") >= 0):
-            constel = qam.qam_constellation(arity)
+            constel = qam.qam_constellation(self.arity)
             rotated_const = map(lambda pt: pt * rot, constel.points())
         #print rotated_const
         self._pkt_input = digital.ofdm_mapper_bcv(rotated_const,
