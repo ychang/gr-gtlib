@@ -14,6 +14,7 @@
 #include "gtlib_framer_sink_2.h"
 #include "gtlib_receiver_monitor.h"
 #include "gtlib_channel_mux.h"
+#include "gtlib_ofdm_mapper_bcv.h"
 %}
 
 
@@ -30,3 +31,6 @@ GR_SWIG_BLOCK_MAGIC(gtlib,receiver_monitor);
 
 GR_SWIG_BLOCK_MAGIC(gtlib,channel_mux);
 %include "gtlib_channel_mux.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_mapper_bcv);
+%include "gtlib_ofdm_mapper_bcv.h"
