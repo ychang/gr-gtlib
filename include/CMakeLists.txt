@@ -27,5 +27,7 @@ install(FILES
     gtlib_framer_sink_2.h
     gtlib_receiver_monitor.h
     gtlib_channel_mux.h
-    gtlib_ofdm_mapper_bcv.h DESTINATION include/gtlib
+    gtlib_ofdm_mapper_bcv.h
+    gtlib_ofdm_insert_preamble.h
+    gtlib_ofdm_cyclic_prefixer.h DESTINATION include/gtlib
 )

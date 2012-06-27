@@ -31,7 +31,7 @@ typedef boost::shared_ptr<gtlib_ofdm_mapper_bcv> gtlib_ofdm_mapper_bcv_sptr;
 
 GTLIB_API gtlib_ofdm_mapper_bcv_sptr 
 gtlib_make_ofdm_mapper_bcv (const std::vector<gr_complex> &constellation, unsigned msgq_limit, 
-			 const std::vector<int> &carrier_map, unsigned int fft_length);
+			      unsigned occupied_carriers, unsigned int fft_length);
 
 /*!
  * \brief take a stream of bytes in and map to a vector of complex
@@ -43,23 +43,21 @@ gtlib_make_ofdm_mapper_bcv (const std::vector<gr_complex> &constellation, unsign
 
 class GTLIB_API gtlib_ofdm_mapper_bcv : public gr_sync_block
 {
-  friend gtlib_ofdm_mapper_bcv_sptr
+  friend GTLIB_API gtlib_ofdm_mapper_bcv_sptr
   gtlib_make_ofdm_mapper_bcv (const std::vector<gr_complex> &constellation, unsigned msgq_limit, 
-			   const std::vector<int> &carrier_map, unsigned int fft_length);
- protected:
+				unsigned occupied_carriers, unsigned int fft_length);
+protected:
   gtlib_ofdm_mapper_bcv (const std::vector<gr_complex> &constellation, unsigned msgq_limit, 
-		      const std::vector<int> &carrier_map, unsigned int fft_length);
+			   unsigned occupied_carriers, unsigned int fft_length);
 
  private:
   std::vector<gr_complex> d_constellation;
-  std::vector<int> d_carrier_map;
-  
   gr_msg_queue_sptr	d_msgq;
   gr_message_sptr	d_msg;
   unsigned		d_msg_offset;
   bool			d_eof;
   
-  //unsigned int 		d_occupied_carriers;
+  unsigned int 		d_occupied_carriers;
   unsigned int 		d_fft_length;
   unsigned int 		d_bit_offset;
   int			d_pending_flag;
@@ -70,14 +68,13 @@ class GTLIB_API gtlib_ofdm_mapper_bcv : public gr_sync_block
   unsigned char d_resid;
   unsigned int d_nresid;
 
-  //std::vector<int> d_subcarrier_map;
+  std::vector<int> d_subcarrier_map;
 
   int randsym();
 
  public:
   ~gtlib_ofdm_mapper_bcv(void);
 
-  unsigned int subcarrier_size(void) { return d_carrier_map.size(); }
   gr_msg_queue_sptr	msgq() const { return d_msgq; }
 
   int work(int noutput_items,
@@ -85,6 +82,7 @@ class GTLIB_API gtlib_ofdm_mapper_bcv : public gr_sync_block
 	   gr_vector_void_star &output_items);
 
 };
+
 
 #endif /* INCLUDED_GTLIB_OFDM_MAPPER_BCV_H */
 

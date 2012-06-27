@@ -15,6 +15,8 @@
 #include "gtlib_receiver_monitor.h"
 #include "gtlib_channel_mux.h"
 #include "gtlib_ofdm_mapper_bcv.h"
+#include "gtlib_ofdm_insert_preamble.h"
+#include "gtlib_ofdm_cyclic_prefixer.h"
 %}
 
 
@@ -34,3 +36,9 @@ GR_SWIG_BLOCK_MAGIC(gtlib,channel_mux);
 
 GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_mapper_bcv);
 %include "gtlib_ofdm_mapper_bcv.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_insert_preamble);
+%include "gtlib_ofdm_insert_preamble.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_cyclic_prefixer);
+%include "gtlib_ofdm_cyclic_prefixer.h"

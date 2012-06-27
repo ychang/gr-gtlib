@@ -21,5 +21,7 @@ install(FILES
     gtlib_ncbfsk_freq_diversity.xml
     gtlib_framer_sink_2.xml
     gtlib_receiver_monitor.xml
-    gtlib_ofdm_mapper_bcv.xml DESTINATION share/gnuradio/grc/blocks
+    gtlib_ofdm_mapper_bcv.xml
+    gtlib_ofdm_insert_preamble.xml
+    gtlib_ofdm_cyclic_prefixer.xml DESTINATION share/gnuradio/grc/blocks
 )

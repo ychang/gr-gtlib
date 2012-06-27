@@ -93,15 +93,15 @@ class transmit_path(gr.hier_block2):
             constel = qam.qam_constellation(self.arity)
             rotated_const = map(lambda pt: pt * rot, constel.points())
         #print rotated_const
-        self._pkt_input = digital.ofdm_mapper_bcv(rotated_const,
+        self._pkt_input = gtlib.ofdm_mapper_bcv(rotated_const,
                                                        msgq_limit,
                                                        options.occupied_tones,
                                                        options.fft_length)
         
-        self.preambles = digital.ofdm_insert_preamble(self._fft_length,
+        self.preambles = gtlib.ofdm_insert_preamble(self._fft_length,
                                                            padded_preambles)
         self.ifft = gr.fft_vcc(self._fft_length, False, win, True)
-        self.cp_adder = digital.ofdm_cyclic_prefixer(self._fft_length,
+        self.cp_adder = gtlib.ofdm_cyclic_prefixer(self._fft_length,
                                                           symbol_length)
         self.scale = gr.multiply_const_cc(1.0 / math.sqrt(self._fft_length))
 

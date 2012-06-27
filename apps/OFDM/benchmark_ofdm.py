@@ -67,7 +67,7 @@ class my_top_block(gr.top_block):
         self.txpath = transmit_path(options)
 
         #self.subcarrier_size = self.txpath._pkt_input.subcarrier_size() 
-        self.subcarrier_size = 512
+        self.subcarrier_size = options.occupied_tones
         
         # 4 bytes of Packet Length
         # 1 byte of whitener offset
@@ -88,6 +88,7 @@ class my_top_block(gr.top_block):
         else:
             stream_size = [0, 100000]
 
+        print 'Stream Size=',stream_size
 
         self.mux = gr.stream_mux(gr.sizeof_gr_complex, stream_size)
         self.throttle = gr.throttle(gr.sizeof_gr_complex, options.sample_rate)
@@ -106,7 +107,7 @@ class my_top_block(gr.top_block):
         
         if options.log:
             self.connect(self.txpath, gr.file_sink(gr.sizeof_gr_complex, "txpath.dat"))
-            #self.connect(self.mux, gr.file_sink(gr.sizeof_gr_complex, "mux.dat"))
+            self.connect(self.mux, gr.file_sink(gr.sizeof_gr_complex, "mux.dat"))
             #self.connect(self.channel, gr.file_sink(gr.sizeof_gr_complex, "channel.dat"))
             
 # /////////////////////////////////////////////////////////////////////////////
@@ -186,6 +187,7 @@ def main():
     pktno = 0
     pkt_size = int(options.size)
 
+    """
     while n < nbytes:
         #r = ''.join([chr(random.randint(0,255)) for i in range(pkt_size-2)])
         #pkt_contents = struct.pack('!H', pktno) + r
@@ -199,7 +201,27 @@ def main():
         #if options.discontinuous and pktno % 5 == 4:
         time.sleep(0.5)
         pktno += 1
-        
+    """
+    pkt_contents = struct.pack('!H', pktno) + (pkt_size - 2) * chr(pktno & 0xff)
+
+    send_pkt(pkt_contents)
+    n += pkt_size
+    time.sleep(0.5)
+    pktno += 1
+
+    send_pkt(pkt_contents)
+    n += pkt_size
+    time.sleep(0.5)
+    pktno += 1
+    
+    send_pkt(pkt_contents)
+    n += pkt_size
+    time.sleep(0.5)
+    pktno += 1
+    #sys.stderr.write('.')
+    
+    #if options.discontinuous and pktno % 5 == 4:
+     
     time.sleep(1)
     send_pkt(eof=True)
     tb.wait()                       # wait for it to finish
