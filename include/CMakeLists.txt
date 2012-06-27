@@ -26,5 +26,6 @@ install(FILES
     gtlib_ncbfsk_freq_diversity.h
     gtlib_framer_sink_2.h
     gtlib_receiver_monitor.h
-    gtlib_channel_mux.h DESTINATION include/gtlib
+    gtlib_channel_mux.h
+    gtlib_ofdm_mapper_bcv.h DESTINATION include/gtlib
 )

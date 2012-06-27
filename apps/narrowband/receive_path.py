@@ -89,7 +89,7 @@ class receive_path(gr.hier_block2):
             self._print_verbage()
 
         # connect block input to channel filter
-        self.connect(self, self.channel_filter, self.packet_receiver)
+        # self.connect(self, self.channel_filter, self.packet_receiver)
         self.connect(self, self.rxmon, self.dummy)
 
     def bitrate(self):
