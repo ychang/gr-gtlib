@@ -26,6 +26,7 @@ from gnuradio import gr
 
 from gnuradio import digital
 from ofdm_sync_pn import ofdm_sync_pn
+import gtlib
 
 class ofdm_receiver(gr.hier_block2):
     """
@@ -91,9 +92,9 @@ class ofdm_receiver(gr.hier_block2):
 
         self.nco = gr.frequency_modulator_fc(nco_sensitivity)         # generate a signal proportional to frequency error of sync block
         self.sigmix = gr.multiply_cc()
-        self.sampler = digital.ofdm_sampler(fft_length, fft_length+cp_length)
+        self.sampler = gtlib.ofdm_sampler(fft_length, fft_length+cp_length)
         self.fft_demod = gr.fft_vcc(fft_length, True, win, True)
-        self.ofdm_frame_acq = digital.ofdm_frame_acquisition(occupied_tones,
+        self.ofdm_frame_acq = gtlib.ofdm_frame_acquisition(occupied_tones,
                                                                   fft_length,
                                                                   cp_length, ks[0])
 

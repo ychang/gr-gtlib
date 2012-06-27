@@ -23,5 +23,8 @@ install(FILES
     gtlib_receiver_monitor.xml
     gtlib_ofdm_mapper_bcv.xml
     gtlib_ofdm_insert_preamble.xml
-    gtlib_ofdm_cyclic_prefixer.xml DESTINATION share/gnuradio/grc/blocks
+    gtlib_ofdm_cyclic_prefixer.xml
+    gtlib_ofdm_sampler.xml
+    gtlib_ofdm_frame_acquisition.xml
+    gtlib_ofdm_frame_sink.xml DESTINATION share/gnuradio/grc/blocks
 )

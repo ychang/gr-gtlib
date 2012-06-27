@@ -24,6 +24,8 @@ import math
 from numpy import fft
 from gnuradio import gr
 
+import gtlib
+
 class ofdm_sync_pn(gr.hier_block2):
     def __init__(self, fft_length, cp_length, logging=False):
         """
@@ -58,7 +60,10 @@ class ofdm_sync_pn(gr.hier_block2):
 
         # Create a moving sum filter for the input
         self.inputmag2 = gr.complex_to_mag_squared()
-        movingsum2_taps = [1.0 for i in range(fft_length//2)]
+
+        # Modified by Yong (12.06.27)
+        #movingsum2_taps = [1.0 for i in range(fft_length//2)]
+        movingsum2_taps = [0.5 for i in range(fft_length)]
 
         if 1:
             self.inputmovingsum = gr.fir_filter_fff(1,movingsum2_taps)
@@ -115,6 +120,8 @@ class ofdm_sync_pn(gr.hier_block2):
 
         if logging:
             self.connect(self.matched_filter, gr.file_sink(gr.sizeof_float, "ofdm_sync_pn-mf_f.dat"))
+            self.connect(self.c2mag, gr.file_sink(gr.sizeof_float, "ofdm_sync_pn-nominator_f.dat"))
+            self.connect(self.square, gr.file_sink(gr.sizeof_float, "ofdm_sync_pn-denominator_f.dat"))
             self.connect(self.normalize, gr.file_sink(gr.sizeof_float, "ofdm_sync_pn-theta_f.dat"))
             self.connect(self.angle, gr.file_sink(gr.sizeof_float, "ofdm_sync_pn-epsilon_f.dat"))
             self.connect(self.pk_detect, gr.file_sink(gr.sizeof_char, "ofdm_sync_pn-peaks_b.dat"))

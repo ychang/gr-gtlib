@@ -17,6 +17,9 @@
 #include "gtlib_ofdm_mapper_bcv.h"
 #include "gtlib_ofdm_insert_preamble.h"
 #include "gtlib_ofdm_cyclic_prefixer.h"
+#include "gtlib_ofdm_sampler.h"
+#include "gtlib_ofdm_frame_acquisition.h"
+#include "gtlib_ofdm_frame_sink.h"
 %}
 
 
@@ -42,3 +45,12 @@ GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_insert_preamble);
 
 GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_cyclic_prefixer);
 %include "gtlib_ofdm_cyclic_prefixer.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_sampler);
+%include "gtlib_ofdm_sampler.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_frame_acquisition);
+%include "gtlib_ofdm_frame_acquisition.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_frame_sink);
+%include "gtlib_ofdm_frame_sink.h"

@@ -29,9 +29,9 @@ import math
 
 import gtlib
 import ofdm_packet_utils
-import ofdm
 import psk
 
+from ofdm_known_symbols import known_symbols_4512_3 
 # /////////////////////////////////////////////////////////////////////////////
 #                              transmit path
 # /////////////////////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ class transmit_path(gr.hier_block2):
 
         # Use freq domain to get doubled-up known symbol for correlation in time domain
         zeros_on_left = int(math.ceil((self._fft_length - self._occupied_tones)/2.0))
-        ksfreq = ofdm.known_symbols_4512_3[0:self._occupied_tones]
+        ksfreq = known_symbols_4512_3[0:self._occupied_tones]
         for i in range(len(ksfreq)):
             if((zeros_on_left + i) & 1):
                 ksfreq[i] = 0
