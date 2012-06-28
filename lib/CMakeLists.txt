@@ -19,7 +19,7 @@
 # Setup library
 ########################################################################
 include(GrPlatform) #define LIB_SUFFIX
-add_library(gnuradio-gtlib SHARED gtlib_bfsk_modulator_fc.cc gtlib_ncbfsk_freq_diversity.cc gtlib_framer_sink_2.cc gtlib_receiver_monitor.cc gtlib_channel_mux.cc gtlib_ofdm_mapper_bcv.cc gtlib_ofdm_insert_preamble.cc gtlib_ofdm_cyclic_prefixer.cc gtlib_ofdm_sampler.cc gtlib_ofdm_frame_acquisition.cc gtlib_ofdm_frame_sink.cc )
+add_library(gnuradio-gtlib SHARED gtlib_bfsk_modulator_fc.cc gtlib_ncbfsk_freq_diversity.cc gtlib_framer_sink_2.cc gtlib_receiver_monitor.cc gtlib_channel_mux.cc gtlib_ofdm_mapper_bcv.cc gtlib_ofdm_insert_preamble.cc gtlib_ofdm_cyclic_prefixer.cc gtlib_ofdm_sampler.cc gtlib_ofdm_frame_acquisition.cc gtlib_ofdm_frame_sink.cc gtlib_ofdm_stbc_encoder.cc gtlib_ofdm_stbc_decoder.cc )
 target_link_libraries(gnuradio-gtlib ${Boost_LIBRARIES} ${GRUEL_LIBRARIES} ${GNURADIO_CORE_LIBRARIES})
 set_target_properties(gnuradio-gtlib PROPERTIES DEFINE_SYMBOL "gnuradio_gtlib_EXPORTS")
 

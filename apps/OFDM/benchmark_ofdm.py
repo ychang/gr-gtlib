@@ -66,8 +66,8 @@ class my_top_block(gr.top_block):
         self.zeros = gr.vector_source_c(z, True)
         self.txpath = transmit_path(options)
 
-        #self.subcarrier_size = self.txpath._pkt_input.subcarrier_size() 
-        self.subcarrier_size = options.occupied_tones
+        self.subcarrier_size = self.txpath._pkt_input.subcarrier_size() 
+        #self.subcarrier_size = options.occupied_tones-2
         
         # 4 bytes of Packet Length
         # 1 byte of whitener offset
@@ -144,7 +144,7 @@ def main():
                 
     parser = OptionParser(option_class=eng_option, conflict_handler="resolve")
     expert_grp = parser.add_option_group("Expert")
-    parser.add_option("-s", "--size", type="eng_float", default=400,
+    parser.add_option("-s", "--size", type="eng_float", default=387,
                       help="set packet size [default=%default]")
     parser.add_option("-M", "--megabytes", type="eng_float", default=1.0,
                       help="set megabytes to transmit [default=%default]")

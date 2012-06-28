@@ -26,5 +26,7 @@ install(FILES
     gtlib_ofdm_cyclic_prefixer.xml
     gtlib_ofdm_sampler.xml
     gtlib_ofdm_frame_acquisition.xml
-    gtlib_ofdm_frame_sink.xml DESTINATION share/gnuradio/grc/blocks
+    gtlib_ofdm_frame_sink.xml
+    gtlib_ofdm_stbc_encoder.xml
+    gtlib_ofdm_stbc_decoder.xml DESTINATION share/gnuradio/grc/blocks
 )

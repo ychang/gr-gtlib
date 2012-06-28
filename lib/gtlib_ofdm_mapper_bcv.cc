@@ -97,18 +97,28 @@ gtlib_ofdm_mapper_bcv::gtlib_ofdm_mapper_bcv (const std::vector<gr_complex> &con
   // find out how many zeros to pad on the sides; the difference between the fft length and the subcarrier
   // mapping size in chunks of four. This is the number to pack on the left and this number plus any 
   // residual nulls (if odd) will be packed on the right. 
-  diff = (d_fft_length/4 - carriers.length())/2; 
+    diff = (d_fft_length/4 - carriers.length())/2; 
 
-  unsigned int i,j,k;
-  for(i = 0; i < carriers.length(); i++) {
-    char c = carriers[i];                            // get the current hex character from the string
-    for(j = 0; j < 4; j++) {                         // walk through all four bits
-      k = (strtol(&c, NULL, 16) >> (3-j)) & 0x1;     // convert to int and extract next bit
-      if(k) {                                        // if bit is a 1, 
-	d_subcarrier_map.push_back(4*(i+diff) + j);  // use this subcarrier
-      }
+    unsigned int i,j,k;
+
+    for(i = 0; i < carriers.length(); i++) {
+        char c = carriers[i];                            // get the current hex character from the string
+        for(j = 0; j < 4; j++) {                         // walk through all four bits
+            k = (strtol(&c, NULL, 16) >> (3-j)) & 0x1;     // convert to int and extract next bit
+
+            if(k) {                                        // if bit is a 1, 
+                d_subcarrier_map.push_back(4*(i+diff) + j);  // use this subcarrier
+            }
+        }
     }
-  }
+    
+    printf ( "[OFDM Mapper] Subcarrier Map Size = %d\r\n",d_subcarrier_map.size());
+    printf ( "[OFDM Mapper] [");
+    for(i = 0; i < d_subcarrier_map.size(); i++) {
+        printf( "%d,",d_subcarrier_map[i]);
+    }
+    printf ( "]\r\n");
+    
 
   // make sure we stay in the limit currently imposed by the occupied_carriers
   if(d_subcarrier_map.size() > d_occupied_carriers) {
@@ -132,112 +142,113 @@ gtlib_ofdm_mapper_bcv::work(int noutput_items,
 			      gr_vector_const_void_star &input_items,
 			      gr_vector_void_star &output_items)
 {
-  gr_complex *out = (gr_complex *)output_items[0];
+    gr_complex *out = (gr_complex *)output_items[0];
   
-  unsigned int i=0;
+    unsigned int i=0;
 
-  printf("OFDM BPSK Mapper:  noutput_items: %d\n", noutput_items);
+    //printf("OFDM BPSK Mapper:  noutput_items: %d\n", noutput_items);
 
-  if(d_eof) {
-    return -1;
-  }
-  
-  if(!d_msg) {
-    d_msg = d_msgq->delete_head();	   // block, waiting for a message
-    d_msg_offset = 0;
-    d_bit_offset = 0;
-    d_pending_flag = 1;			   // new packet, write start of packet flag
-    
-    if((d_msg->length() == 0) && (d_msg->type() == 1)) {
-      d_msg.reset();
-      return -1;		// We're done; no more messages coming.
+    if(d_eof) {
+        return -1;
     }
-  }
-
-  char *out_flag = 0;
-  if(output_items.size() == 2)
-    out_flag = (char *) output_items[1];
   
+    if(!d_msg) {
+        d_msg = d_msgq->delete_head();	   // block, waiting for a message
+        d_msg_offset = 0;
+        d_bit_offset = 0;
+        d_pending_flag = 1;			   // new packet, write start of packet flag
 
-  // Build a single symbol:
-  // Initialize all bins to 0 to set unused carriers
-  memset(out, 0, d_fft_length*sizeof(gr_complex));
-  
-  i = 0;
-  unsigned char bits = 0;
-  //while((d_msg_offset < d_msg->length()) && (i < d_occupied_carriers)) {
-  while((d_msg_offset < d_msg->length()) && (i < d_subcarrier_map.size())) {
-
-    // need new data to process
-    if(d_bit_offset == 0) {
-      d_msgbytes = d_msg->msg()[d_msg_offset];
-      //printf("mod message byte: %x\n", d_msgbytes);
+        if((d_msg->length() == 0) && (d_msg->type() == 1)) {
+          d_msg.reset();
+          return -1;		// We're done; no more messages coming.
+        }
     }
 
-    if(d_nresid > 0) {
-      // take the residual bits, fill out nbits with info from the new byte, and put them in the symbol
-      d_resid |= (((1 << d_nresid)-1) & d_msgbytes) << (d_nbits - d_nresid);
-      bits = d_resid;
+    char *out_flag = 0;
 
-      out[d_subcarrier_map[i]] = d_constellation[bits];
-      i++;
+    if(output_items.size() == 2)
+        out_flag = (char *) output_items[1];
+  
 
-      d_bit_offset += d_nresid;
-      d_nresid = 0;
-      d_resid = 0;
-      //printf("mod bit(r): %x   resid: %x   nresid: %d    bit_offset: %d\n", 
-      //     bits, d_resid, d_nresid, d_bit_offset);
-    }
-    else {
-      if((8 - d_bit_offset) >= d_nbits) {  // test to make sure we can fit nbits
-	// take the nbits number of bits at a time from the byte to add to the symbol
-	bits = ((1 << d_nbits)-1) & (d_msgbytes >> d_bit_offset);
-	d_bit_offset += d_nbits;
-	
-	out[d_subcarrier_map[i]] = d_constellation[bits];
-	i++;
-      }
-      else {  // if we can't fit nbits, store them for the next 
-	// saves d_nresid bits of this message where d_nresid < d_nbits
-	unsigned int extra = 8-d_bit_offset;
-	d_resid = ((1 << extra)-1) & (d_msgbytes >> d_bit_offset);
-	d_bit_offset += extra;
-	d_nresid = d_nbits - extra;
-      }
+    // Build a single symbol:
+    // Initialize all bins to 0 to set unused carriers
+    memset(out, 0, d_fft_length*sizeof(gr_complex));
+
+    i = 0;
+    unsigned char bits = 0;
+
+    while((d_msg_offset < d_msg->length()) && (i < d_subcarrier_map.size())) {
+
+        // need new data to process
+        if(d_bit_offset == 0) {
+            d_msgbytes = d_msg->msg()[d_msg_offset];
+            //printf("mod message byte: %x\n", d_msgbytes);
+        }
+
+        if(d_nresid > 0) {
+            // take the residual bits, fill out nbits with info from the new byte, and put them in the symbol
+            d_resid |= (((1 << d_nresid)-1) & d_msgbytes) << (d_nbits - d_nresid);
+            bits = d_resid;
+
+            out[d_subcarrier_map[i]] = d_constellation[bits];
+            i++;
+
+            d_bit_offset += d_nresid;
+            d_nresid = 0;
+            d_resid = 0;
+            //printf("mod bit(r): %x   resid: %x   nresid: %d    bit_offset: %d\n", 
+            //     bits, d_resid, d_nresid, d_bit_offset);
+        }
+        else {
+            if((8 - d_bit_offset) >= d_nbits) {  // test to make sure we can fit nbits
+                // take the nbits number of bits at a time from the byte to add to the symbol
+                bits = ((1 << d_nbits)-1) & (d_msgbytes >> d_bit_offset);
+                d_bit_offset += d_nbits;
+
+                out[d_subcarrier_map[i]] = d_constellation[bits];
+                i++;
+            }
+            else {  // if we can't fit nbits, store them for the next 
+                // saves d_nresid bits of this message where d_nresid < d_nbits
+                unsigned int extra = 8-d_bit_offset;
+                d_resid = ((1 << extra)-1) & (d_msgbytes >> d_bit_offset);
+                d_bit_offset += extra;
+                d_nresid = d_nbits - extra;
+            }
       
-    }
+        }
             
-    if(d_bit_offset == 8) {
-      d_bit_offset = 0;
-      d_msg_offset++;
-    }
-  }
-
-  // Ran out of data to put in symbol
-  if (d_msg_offset == d_msg->length()) {
-    if(d_nresid > 0) {
-      d_resid |= 0x00;
-      bits = d_resid;
-      d_nresid = 0;
-      d_resid = 0;
+        if(d_bit_offset == 8) {
+            d_bit_offset = 0;
+            d_msg_offset++;
+        }
     }
 
-    //while(i < d_occupied_carriers) {   // finish filling out the symbol
-    while(i < d_subcarrier_map.size()) {   // finish filling out the symbol
-      out[d_subcarrier_map[i]] = d_constellation[randsym()];
+    // Ran out of data to put in symbol
+    if (d_msg_offset == d_msg->length()) {
+        if(d_nresid > 0) {
+            d_resid |= 0x00;
+            bits = d_resid;
+            d_nresid = 0;
+            d_resid = 0;
+        }
 
-      i++;
+        //while(i < d_occupied_carriers) {   // finish filling out the symbol
+        while(i < d_subcarrier_map.size()) {   // finish filling out the symbol
+            out[d_subcarrier_map[i]] = d_constellation[randsym()];
+            i++;
+        }
+
+        if (d_msg->type() == 1)	        // type == 1 sets EOF
+            d_eof = true;
+
+        d_msg.reset();   			// finished packet, free message
+        assert(d_bit_offset == 0);
     }
 
-    if (d_msg->type() == 1)	        // type == 1 sets EOF
-      d_eof = true;
-    d_msg.reset();   			// finished packet, free message
-    assert(d_bit_offset == 0);
-  }
+    if (out_flag)
+        out_flag[0] = d_pending_flag;
+    d_pending_flag = 0;
 
-  if (out_flag)
-    out_flag[0] = d_pending_flag;
-  d_pending_flag = 0;
-
-  return 1;  // produced symbol
+    return 1;  // produced symbol
 }

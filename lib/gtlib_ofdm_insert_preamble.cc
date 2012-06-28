@@ -87,7 +87,7 @@ gtlib_ofdm_insert_preamble::general_work (int noutput_items,
   int no = 0;	// number items output
   int ni = 0;	// number items read from input
 
-    printf("OFDM Insert Preamble:  noutput_items: %d\n", noutput_items);
+    //printf("OFDM Insert Preamble:  noutput_items: %d\n", noutput_items);
 
 #define write_out_flag() 			\
   do { if (out_flag) 				\

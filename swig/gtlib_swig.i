@@ -20,6 +20,8 @@
 #include "gtlib_ofdm_sampler.h"
 #include "gtlib_ofdm_frame_acquisition.h"
 #include "gtlib_ofdm_frame_sink.h"
+#include "gtlib_ofdm_stbc_encoder.h"
+#include "gtlib_ofdm_stbc_decoder.h"
 %}
 
 
@@ -54,3 +56,9 @@ GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_frame_acquisition);
 
 GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_frame_sink);
 %include "gtlib_ofdm_frame_sink.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_stbc_encoder);
+%include "gtlib_ofdm_stbc_encoder.h"
+
+GR_SWIG_BLOCK_MAGIC(gtlib,ofdm_stbc_decoder);
+%include "gtlib_ofdm_stbc_decoder.h"

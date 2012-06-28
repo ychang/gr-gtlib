@@ -32,5 +32,7 @@ install(FILES
     gtlib_ofdm_cyclic_prefixer.h
     gtlib_ofdm_sampler.h
     gtlib_ofdm_frame_acquisition.h
-    gtlib_ofdm_frame_sink.h DESTINATION include/gtlib
+    gtlib_ofdm_frame_sink.h
+    gtlib_ofdm_stbc_encoder.h
+    gtlib_ofdm_stbc_decoder.h DESTINATION include/gtlib
 )

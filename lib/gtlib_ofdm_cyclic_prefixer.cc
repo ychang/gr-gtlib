@@ -68,6 +68,6 @@ gtlib_ofdm_cyclic_prefixer::work (int noutput_items,
     out[i] = in[j];
   }
 
-  printf("OFDM Cyclic Prefixer:  d_output_size: %d\n", d_output_size);
+  //printf("OFDM Cyclic Prefixer:  d_output_size: %d\n", d_output_size);
   return d_output_size;
 }
