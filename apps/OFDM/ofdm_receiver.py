@@ -94,7 +94,8 @@ class ofdm_receiver(gr.hier_block2):
         self.sigmix = gr.multiply_cc()
         self.sampler = gtlib.ofdm_sampler(fft_length, fft_length+cp_length)
         self.fft_demod = gr.fft_vcc(fft_length, True, win, True)
-        self.ofdm_frame_acq = gtlib.ofdm_frame_acquisition(occupied_tones,
+
+        self.ofdm_frame_acq = gtlib.ofdm_stbc_frame_acquisition(occupied_tones,
                                                                   fft_length,
                                                                   cp_length, ks[0])
 

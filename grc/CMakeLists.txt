@@ -28,5 +28,6 @@ install(FILES
     gtlib_ofdm_frame_acquisition.xml
     gtlib_ofdm_frame_sink.xml
     gtlib_ofdm_stbc_encoder.xml
-    gtlib_ofdm_stbc_decoder.xml DESTINATION share/gnuradio/grc/blocks
+    gtlib_ofdm_stbc_decoder.xml
+    gtlib_ofdm_stbc_frame_acquisition.xml DESTINATION share/gnuradio/grc/blocks
 )

@@ -22,7 +22,7 @@
 #include "config.h"
 #endif
 
-#include <gtlib_ofdm_frame_acquisition.h>
+#include <gtlib_ofdm_stbc_frame_acquisition.h>
 #include <gr_io_signature.h>
 #include <gr_expj.h>
 #include <gr_math.h>
@@ -32,23 +32,25 @@
 #define M_TWOPI (2*M_PI)
 #define MAX_NUM_SYMBOLS 1000
 
-gtlib_ofdm_frame_acquisition_sptr
-gtlib_make_ofdm_frame_acquisition (unsigned int occupied_carriers,
+gtlib_ofdm_stbc_frame_acquisition_sptr
+gtlib_make_ofdm_stbc_frame_acquisition (unsigned int occupied_carriers,
 				     unsigned int fft_length, 
 				     unsigned int cplen,
 				     const std::vector<gr_complex> &known_symbol,
-				     unsigned int max_fft_shift_len)
+				     unsigned int max_fft_shift_len,
+				     unsigned int code_type)
 {
-  return gnuradio::get_initial_sptr(new gtlib_ofdm_frame_acquisition (occupied_carriers, fft_length, cplen,
-									known_symbol, max_fft_shift_len));
+  return gnuradio::get_initial_sptr(new gtlib_ofdm_stbc_frame_acquisition (occupied_carriers, fft_length, cplen,
+									known_symbol, max_fft_shift_len, code_type));
 }
 
-gtlib_ofdm_frame_acquisition::gtlib_ofdm_frame_acquisition (unsigned occupied_carriers,
+gtlib_ofdm_stbc_frame_acquisition::gtlib_ofdm_stbc_frame_acquisition (unsigned occupied_carriers,
 								unsigned int fft_length, 
 								unsigned int cplen,
 								const std::vector<gr_complex> &known_symbol,
-								unsigned int max_fft_shift_len)
-  : gr_block ("ofdm_frame_acquisition",
+								unsigned int max_fft_shift_len,
+								unsigned int code_type)
+  : gr_block ("ofdm_stbc_frame_acquisition",
 	      gr_make_io_signature2 (2, 2, sizeof(gr_complex)*fft_length, sizeof(char)*fft_length),
 	      gr_make_io_signature2 (2, 2, sizeof(gr_complex)*occupied_carriers, sizeof(char))),
     d_occupied_carriers(occupied_carriers),
@@ -56,6 +58,7 @@ gtlib_ofdm_frame_acquisition::gtlib_ofdm_frame_acquisition (unsigned occupied_ca
     d_cplen(cplen),
     d_freq_shift_len(max_fft_shift_len),
     d_known_symbol(known_symbol),
+    d_code_type(code_type),
     d_coarse_freq(0),
     d_phase_count(0)
 {
@@ -86,15 +89,23 @@ gtlib_ofdm_frame_acquisition::gtlib_ofdm_frame_acquisition (unsigned occupied_ca
         }
     
     }
+    
+    d_block_size = 2;
+    
+    stored_symbol[0].resize(occupied_carriers);
+    stored_symbol[1].resize(occupied_carriers);
+    stored_symbol[2].resize(occupied_carriers);
+    stored_symbol[3].resize(occupied_carriers);
+    
 }
 
-gtlib_ofdm_frame_acquisition::~gtlib_ofdm_frame_acquisition(void)
+gtlib_ofdm_stbc_frame_acquisition::~gtlib_ofdm_stbc_frame_acquisition(void)
 {
     delete [] d_phase_lut;
 }
 
 void
-gtlib_ofdm_frame_acquisition::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+gtlib_ofdm_stbc_frame_acquisition::forecast (int noutput_items, gr_vector_int &ninput_items_required)
 {
     unsigned ninputs = ninput_items_required.size ();
     for (unsigned i = 0; i < ninputs; i++)
@@ -102,7 +113,7 @@ gtlib_ofdm_frame_acquisition::forecast (int noutput_items, gr_vector_int &ninput
 }
 
 gr_complex
-gtlib_ofdm_frame_acquisition::coarse_freq_comp(int freq_delta, int symbol_count)
+gtlib_ofdm_stbc_frame_acquisition::coarse_freq_comp(int freq_delta, int symbol_count)
 {
     //  return gr_complex(cos(-M_TWOPI*freq_delta*d_cplen/d_fft_length*symbol_count),
     //	    sin(-M_TWOPI*freq_delta*d_cplen/d_fft_length*symbol_count));
@@ -113,7 +124,7 @@ gtlib_ofdm_frame_acquisition::coarse_freq_comp(int freq_delta, int symbol_count)
 }
 
 void
-gtlib_ofdm_frame_acquisition::correlate(const gr_complex *symbol, int zeros_on_left)
+gtlib_ofdm_stbc_frame_acquisition::correlate(const gr_complex *symbol, int zeros_on_left)
 {
     unsigned int i,j;
     
@@ -147,7 +158,7 @@ gtlib_ofdm_frame_acquisition::correlate(const gr_complex *symbol, int zeros_on_l
 }
 
 void
-gtlib_ofdm_frame_acquisition::calculate_equalizer(const gr_complex *symbol, int zeros_on_left)
+gtlib_ofdm_stbc_frame_acquisition::calculate_equalizer(const gr_complex *symbol, int zeros_on_left)
 {
     unsigned int i=0;
 
@@ -189,7 +200,7 @@ gtlib_ofdm_frame_acquisition::calculate_equalizer(const gr_complex *symbol, int 
 }
 
 int
-gtlib_ofdm_frame_acquisition::general_work(int noutput_items,
+gtlib_ofdm_stbc_frame_acquisition::general_work(int noutput_items,
 					     gr_vector_int &ninput_items,
 					     gr_vector_const_void_star &input_items,
 					     gr_vector_void_star &output_items)
@@ -202,10 +213,14 @@ gtlib_ofdm_frame_acquisition::general_work(int noutput_items,
     
     int unoccupied_carriers = d_fft_length - d_occupied_carriers;
     int zeros_on_left = (int)ceil(unoccupied_carriers/2.0);
+    int ii;
 
+
+    printf("OFDM Frame Acquisition: noutput_items=%d\n",noutput_items);
     
+    // Check the existence of Preamble Symbol ( Single symbol )
     if(signal_in[0]) {
-        
+            
         printf("OFDM Frame Acquisition:  Signal In\n");
         d_phase_count = 1;
 
@@ -218,31 +233,104 @@ gtlib_ofdm_frame_acquisition::general_work(int noutput_items,
         calculate_equalizer(symbol, zeros_on_left);
         signal_out[0] = 1;
         d_symbol_idx = 0;
-    }
-    else {
-        signal_out[0] = 0;
-    } 
+ 
+        d_symbol_idx++;
+        d_phase_count++;
 
-    if (d_symbol_idx > 0)
+        consume_each(1);
+        return 1;
+    }
+    else
     {
-        printf("OFDM Frame Acquisition: Symbol Index=%d\n",d_symbol_idx);
-        for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+        signal_out[0] = 0;
+        if (d_symbol_idx < MAX_SYMBOL)
         {
-            out[i] = d_hestimate[i]*coarse_freq_comp(d_coarse_freq,d_phase_count)
-                        *symbol[i+zeros_on_left+d_coarse_freq];
-        }
-    }
- 
-    
-    d_symbol_idx++;
- 
-    d_phase_count++;
-    
-    if(d_phase_count == MAX_NUM_SYMBOLS) {
-        d_phase_count = 1;
-    }
+            for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+            {
+                stored_symbol[ (d_symbol_idx-1)%d_block_size ][i] = coarse_freq_comp(d_coarse_freq,d_phase_count)
+                    *symbol[i+zeros_on_left+d_coarse_freq];
+            }
+            consume_each(1);
+            
+            d_symbol_idx++;
+            d_phase_count++;
 
- 
-    consume_each(1);
-    return 1;
+            if(d_phase_count == MAX_NUM_SYMBOLS) {
+                d_phase_count = 1;
+            }
+            
+            if ( ((d_symbol_idx-1)%d_block_size) == 0 )
+            {
+                switch(d_code_type)
+                {
+                    case 0: 
+
+                        printf("OFDM Frame Acquisition: Odd Frame\n");
+                        for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                        {
+                            out[i] = d_hestimate[i]*stored_symbol[0][i];
+                        }
+
+                        printf("OFDM Frame Acquisition: Even Frame\n");
+                        for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                        {
+                            out[d_occupied_carriers + i] = gr_complex(0,0) - d_hestimate[i]*stored_symbol[1][i];
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                
+                return d_block_size;                
+            }
+            else
+            {
+                return 0;
+            }
+            /*
+            switch(d_code_type)
+            {
+                case 0: 
+
+                    printf("OFDM Frame Acquisition: Symbol Index=%d Odd Frame\n",d_symbol_idx);
+                    for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                    {
+                        out[i] = d_hestimate[i]*coarse_freq_comp(d_coarse_freq,d_phase_count)
+                                    *symbol[i+zeros_on_left+d_coarse_freq];
+                    }
+
+                    d_symbol_idx++;
+                    d_phase_count++;
+
+                    if(d_phase_count == MAX_NUM_SYMBOLS) {
+                        d_phase_count = 1;
+                    }
+
+                    printf("OFDM Frame Acquisition: Symbol Index=%d Even Frame\n",d_symbol_idx);
+                    for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                    {
+                        //out[i] = gr_complex(0,0) - d_hestimate[i]*coarse_freq_comp(d_coarse_freq,d_phase_count)
+                        //            *symbol[i+zeros_on_left+d_coarse_freq];
+                                   
+                        out[d_occupied_carriers + i] = gr_complex(0,0) - d_hestimate[i]*coarse_freq_comp(d_coarse_freq,d_phase_count)
+                                    *symbol[d_fft_length+zeros_on_left+d_coarse_freq];
+                    }
+                 
+                    d_symbol_idx++;
+                    d_phase_count++;
+
+                    if(d_phase_count == MAX_NUM_SYMBOLS) {
+                        d_phase_count = 1;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            */
+        }
+        consume_each(1);
+    }
+    
+    
 }

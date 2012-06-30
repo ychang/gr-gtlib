@@ -221,7 +221,7 @@ def main():
     #sys.stderr.write('.')
     
     #if options.discontinuous and pktno % 5 == 4:
-     
+
     time.sleep(1)
     send_pkt(eof=True)
     tb.wait()                       # wait for it to finish
