@@ -265,17 +265,35 @@ gtlib_ofdm_stbc_frame_acquisition::general_work(int noutput_items,
                 {
                     case 0: 
 
-                        printf("OFDM Frame Acquisition: Odd Frame\n");
-                        for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                        if (0)
                         {
-                            out[i] = d_hestimate[i]*stored_symbol[0][i];
+                            printf("OFDM Frame Acquisition: Odd Frame\n");
+                            for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                            {
+                                out[i] = d_hestimate[i]*stored_symbol[0][i];
+                            }
+        
+                            printf("OFDM Frame Acquisition: Even Frame\n");
+                            for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                            {
+                                out[d_occupied_carriers + i] = gr_complex(0,0) - d_hestimate[i]*stored_symbol[1][i];
+                            }
                         }
-
-                        printf("OFDM Frame Acquisition: Even Frame\n");
-                        for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                        else
                         {
-                            out[d_occupied_carriers + i] = gr_complex(0,0) - d_hestimate[i]*stored_symbol[1][i];
+                            printf("OFDM Frame Acquisition: Odd Frame\n");
+                            for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                            {
+                                out[d_occupied_carriers + i] = gr_complex(0,0) - d_hestimate[i]*stored_symbol[0][i];
+                            }
+        
+                            printf("OFDM Frame Acquisition: Even Frame\n");
+                            for(unsigned int i = 0; i < d_occupied_carriers; i++) 
+                            {
+                                out[i] = d_hestimate[i]*stored_symbol[1][i];
+                            }
                         }
+                        
                         break;
 
                     default:

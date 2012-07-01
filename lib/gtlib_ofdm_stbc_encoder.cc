@@ -103,8 +103,18 @@ gtlib_ofdm_stbc_encoder::general_work (int noutput_items,
             
                 for (jj = 0;jj < d_fft_length; jj++)
                 {
-                    out[ii*d_fft_length + jj] = in[ii*d_fft_length + jj];
-                    out[(ii+1)*d_fft_length + jj] = gr_complex(0,0) - in[(ii+1)*d_fft_length + jj];
+                    if (0)
+                    {
+                        
+                        out[(ii)*d_fft_length + jj] = in[ii*d_fft_length + jj];
+                        out[(ii+1)*d_fft_length + jj] = gr_complex(0,0) - in[(ii+1)*d_fft_length + jj];
+                    
+                    }
+                    else
+                    {
+                        out[(ii)*d_fft_length + jj] = gr_complex(0,0) - in[(ii+1)*d_fft_length + jj];
+                        out[(ii+1)*d_fft_length + jj] = in[ii*d_fft_length + jj];
+                    }
                 }
 
                 break;
