@@ -38,7 +38,7 @@ class ofdm_receiver(gr.hier_block2):
     (Van de Beeks).
     """
 
-    def __init__(self, fft_length, cp_length, occupied_tones, snr, ks, logging=False):
+    def __init__(self, fft_length, cp_length, occupied_tones, snr, ks, ts, logging=False):
         """
 	Hierarchical block for receiving OFDM symbols.
 
@@ -55,6 +55,8 @@ class ofdm_receiver(gr.hier_block2):
         @type  snr: float
         @param ks: known symbols used as preambles to each packet
         @type  ks: list of lists
+        @param ks: known training symbols used to estimate channels
+        @type  ts: list of lists
         @param logging: turn file logging on or off
         @type  logging: bool
 	"""
@@ -75,6 +77,8 @@ class ofdm_receiver(gr.hier_block2):
         win = [1 for i in range(fft_length)]
 
         zeros_on_left = int(math.ceil((fft_length - occupied_tones)/2.0))
+
+        # Preamble Sequence
         ks0 = fft_length*[0,]
         ks0[zeros_on_left : zeros_on_left + occupied_tones] = ks[0]
         
@@ -82,6 +86,7 @@ class ofdm_receiver(gr.hier_block2):
         ks0time = fft.ifft(ks0)
         # ADD SCALING FACTOR
         ks0time = ks0time.tolist()
+
 
         nco_sensitivity = -2.0/fft_length   # correct for fine frequency
         self.ofdm_sync = ofdm_sync_pn(fft_length,
@@ -97,7 +102,10 @@ class ofdm_receiver(gr.hier_block2):
 
         self.ofdm_frame_acq = gtlib.ofdm_stbc_frame_acquisition(occupied_tones,
                                                                   fft_length,
-                                                                  cp_length, ks[0])
+                                                                  cp_length, ks[0], 
+                                                                  10,
+                                                                  0,
+                                                                  ts)
 
         self.connect(self, self.chan_filt)                            # filter the input channel
         self.connect(self.chan_filt, self.ofdm_sync)                  # into the synchronization alg.

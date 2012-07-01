@@ -62,13 +62,31 @@ class transmit_path(gr.hier_block2):
 
         # Use freq domain to get doubled-up known symbol for correlation in time domain
         zeros_on_left = int(math.ceil((self._fft_length - self._occupied_tones)/2.0))
-        ksfreq = known_symbols_4512_3[0:self._occupied_tones]
-        for i in range(len(ksfreq)):
+
+
+        # STBC Initialization
+        self._block_length = 2
+        
+        print "Length of predetermined known symbols =",len(known_symbols_4512_3)
+
+        # Preamble Sequence
+        preamble_sequence = known_symbols_4512_3[0:self._occupied_tones]
+        training_sequence = ( known_symbols_4512_3[self._occupied_tones:self._occupied_tones*2], \
+                            known_symbols_4512_3[self._occupied_tones*2:self._occupied_tones*3] )
+               
+        # Generating consecutive two symbols in time domain
+        for i in range(len(preamble_sequence)):
             if((zeros_on_left + i) & 1):
-                ksfreq[i] = 0
+                preamble_sequence[i] = 0
+
+        
+        for i in range(len(training_sequence[0])):
+                #training_sequence[0][i] = 0
+                training_sequence[1][i] = 0
 
         # hard-coded known symbols
-        preambles = (ksfreq,)
+        # preambles = (preamble_sequence,)
+        preambles = (preamble_sequence, training_sequence[0], training_sequence[1])
                 
         padded_preambles = list()
         for pre in preambles:
@@ -84,6 +102,8 @@ class transmit_path(gr.hier_block2):
         rot = 1
         if self._modulation == "qpsk":
             rot = (0.707+0.707j)
+
+        print "Padded Preambles (l=%d,%d):"%(len(padded_preambles),len(padded_preambles[0])), padded_preambles
             
         # FIXME: pass the constellation objects instead of just the points
         if(self._modulation.find("psk") >= 0):

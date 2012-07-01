@@ -34,8 +34,9 @@ gtlib_ofdm_stbc_frame_acquisition_sptr
 GTLIB_API gtlib_make_ofdm_stbc_frame_acquisition (unsigned int occupied_carriers, unsigned int fft_length,
 				unsigned int cplen,
 				const std::vector<gr_complex> &known_symbol, 
-				unsigned int max_fft_shift_len=10,
-				unsigned int code_type=0);
+				unsigned int max_fft_shift_len,
+				unsigned int code_type,
+				const std::vector< std::vector<gr_complex> > &training_symbol);
 
 /*!
  * \brief take a vector of complex constellation points in from an FFT
@@ -71,19 +72,21 @@ class GTLIB_API gtlib_ofdm_stbc_frame_acquisition : public gr_block
 				  unsigned int cplen,
 				  const std::vector<gr_complex> &known_symbol, 
 				  unsigned int max_fft_shift_len,
-				  unsigned int code_type);
+				  unsigned int code_type,
+				  const std::vector< std::vector<gr_complex> > &training_symbol);
   
 protected:
   gtlib_ofdm_stbc_frame_acquisition (unsigned int occupied_carriers, unsigned int fft_length,
 			     unsigned int cplen,
 			     const std::vector<gr_complex> &known_symbol, 
 			     unsigned int max_fft_shift_len,
-			     unsigned int code_type);
+			     unsigned int code_type,
+			     const std::vector< std::vector<gr_complex> > &training_symbol);
   
  private:
   unsigned char slicer(gr_complex x);
   void correlate(const gr_complex *symbol, int zeros_on_left);
-  void calculate_equalizer(const gr_complex *symbol, int zeros_on_left);
+  void calculate_equalizer(const gr_complex *symbol, int zeros_on_left, int channel);
   gr_complex coarse_freq_comp(int freq_delta, int count);
   
   unsigned int d_occupied_carriers;  // !< \brief number of subcarriers with data
@@ -95,8 +98,10 @@ protected:
   std::vector<gr_complex> d_known_symbol; // !< \brief known symbols at start of frame
   std::vector<float> d_known_phase_diff; // !< \brief factor used in correlation from known symbol
   std::vector<float> d_symbol_phase_diff; // !< \brief factor used in correlation from received symbol
-  std::vector<gr_complex> d_hestimate;  // !< channel estimate
-  int d_coarse_freq;             // !< \brief search distance in number of bins
+
+  std::vector< std::vector <gr_complex> >d_hestimate;  // !< channel estimate
+
+  int d_coarse_freq;                    // !< \brief search distance in number of bins
   unsigned int d_phase_count;           // !< \brief accumulator for coarse freq correction
   float d_snr_est;                      // !< an estimation of the signal to noise ratio
     
@@ -105,6 +110,7 @@ protected:
 
   void forecast(int noutput_items, gr_vector_int &ninput_items_required);
 
+    std::vector< std::vector <gr_complex> > d_training_symbol; // !< \brief known symbols at start of frame
     unsigned int d_block_size;
     unsigned int d_symbol_idx;
 

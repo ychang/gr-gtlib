@@ -75,7 +75,7 @@ class my_top_block(gr.top_block):
         symbols_per_packet = math.ceil(((4+1+options.size+4) * 8) / math.log(self.txpath.arity,2) / self.subcarrier_size)
         
         # 1 set of Preamble
-        samples_per_packet = (symbols_per_packet + 1) * (options.fft_length+options.cp_length)
+        samples_per_packet = (symbols_per_packet + 3) * (options.fft_length+options.cp_length)
 
 
 
@@ -160,8 +160,10 @@ def main():
                       help="enable discontinous transmission, burst of N packets [Default is continuous]")
     parser.add_option("","--channel-off", action="store_true", default=False,
                       help="Turns AWGN, freq offset channel off")
+
     parser.add_option("","--multipath-on", action="store_true", default=False,
                       help="enable multipath")
+
 
     transmit_path.add_options(parser, expert_grp)
     receive_path.add_options(parser, expert_grp)
