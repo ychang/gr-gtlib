@@ -70,9 +70,14 @@ def main():
     def rx_callback(ok, payload):
         global n_rcvd, n_right
         n_rcvd += 1
-        (pktno,) = struct.unpack('!H', payload[0:2])
-        if ok:
-            n_right += 1
+        
+        if len(payload) > 2:
+            (pktno,) = struct.unpack('!H', payload[0:2])
+            if ok:
+                n_right += 1
+        else:
+            pktno = -1
+            
         print "ok: %r \t pktno: %d \t n_rcvd: %d \t n_right: %d" % (ok, pktno, n_rcvd, n_right)
 
         if 0:
