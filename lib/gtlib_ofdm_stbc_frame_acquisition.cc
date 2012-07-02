@@ -28,7 +28,7 @@
 #include <gr_math.h>
 #include <cstdio>
 
-#define VERBOSE 1
+#define VERBOSE 0
 #define M_TWOPI (2*M_PI)
 #define MAX_NUM_SYMBOLS 1000
 
