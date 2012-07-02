@@ -127,8 +127,22 @@ class transmit_path(gr.hier_block2):
 
         self.amp = gr.multiply_const_cc(1)
         self.set_tx_amplitude(self._tx_amplitude)
+
+        """        
+        Transformation Matrix
         
-        self.stbc_encoder = gtlib.ofdm_stbc_encoder(options.fft_length,0)
+        Alamouti
+        
+         1  0  0  0
+         0  1  0  0
+         0  0  0  1
+         0  0 -1  0
+        
+        """ 
+        
+        code_matrix = [ [1,0,0,0], [0,1,0,0], [0,0,0,-1], [0,0,1,0] ];
+        
+        self.stbc_encoder = gtlib.ofdm_stbc_encoder(options.fft_length,code_matrix, 1.0)
         
         # Create and setup transmit path flow graph
         
@@ -139,7 +153,9 @@ class transmit_path(gr.hier_block2):
         self.connect((self._pkt_input, 0), (self.stbc_encoder, 0))
         self.connect((self._pkt_input, 1), (self.stbc_encoder, 1))
         
-        self.connect(self.stbc_encoder, (self.preambles, 0))
+        self.connect( (self.stbc_encoder,0) , (self.preambles, 0))
+        self.connect( (self.stbc_encoder,1), gr.null_sink ( 8*self._fft_length) )
+
         self.connect((self._pkt_input, 1), (self.preambles, 1))
         
         self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, self)

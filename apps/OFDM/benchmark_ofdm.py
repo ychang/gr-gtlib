@@ -47,8 +47,8 @@ class my_top_block(gr.top_block):
             frequency_offset = options.frequency_offset / options.fft_length
 
             if options.multipath_on:
-                #taps = [1.0, .2, 0.0, .1, .08, -.4, .12, -.2, 0, 0, 0, .3]
-                taps = [0.5,0.5]
+                taps = [1.0, .2, 0.0, .1, .08, -.4, .12, -.2, 0, 0, 0, .3]
+                #taps = [0.5,0.5]
             else:
                 taps = [1.0, 0.0]
 

@@ -27,7 +27,7 @@
 class gtlib_ofdm_stbc_encoder;
 typedef boost::shared_ptr<gtlib_ofdm_stbc_encoder> gtlib_ofdm_stbc_encoder_sptr;
 
-GTLIB_API gtlib_ofdm_stbc_encoder_sptr gtlib_make_ofdm_stbc_encoder (unsigned int fft_length, unsigned int code_type);
+GTLIB_API gtlib_ofdm_stbc_encoder_sptr gtlib_make_ofdm_stbc_encoder (unsigned int fft_length, const std::vector < std::vector <int> > &code_matrix, float code_rate);
 
 /*!
  * \brief <+description+>
@@ -35,16 +35,23 @@ GTLIB_API gtlib_ofdm_stbc_encoder_sptr gtlib_make_ofdm_stbc_encoder (unsigned in
  */
 class GTLIB_API gtlib_ofdm_stbc_encoder : public gr_block
 {
-	friend GTLIB_API gtlib_ofdm_stbc_encoder_sptr gtlib_make_ofdm_stbc_encoder (unsigned int fft_length, unsigned int code_type);
+	friend GTLIB_API gtlib_ofdm_stbc_encoder_sptr gtlib_make_ofdm_stbc_encoder (unsigned int fft_length, const std::vector < std::vector <int> > &code_matrix, float code_rate);
 
-	gtlib_ofdm_stbc_encoder (unsigned int fft_length, unsigned int code_type);
+	gtlib_ofdm_stbc_encoder (unsigned int fft_length, const std::vector < std::vector <int> > &code_matrix, float code_rate);
     //void forecast(int noutput_items, gr_vector_int &ninput_items_required);
     
     private:
+       
         unsigned int d_fft_length;
-        unsigned int d_code_type;
         unsigned int d_encoding_idx;
-        unsigned int d_block_size;
+
+        unsigned int d_nantennas;
+        unsigned int d_ntimeslots;
+        unsigned int d_nsymbols;
+
+        float d_code_rate;        
+        std::vector < std::vector <int> > d_code_matrix;
+        std::vector < std::vector <gr_complex> > d_stored_symbol;        
         
  public:
 	~gtlib_ofdm_stbc_encoder ();

@@ -64,7 +64,7 @@ def main():
 
     parser = OptionParser(option_class=eng_option, conflict_handler="resolve")
     expert_grp = parser.add_option_group("Expert")
-    parser.add_option("-s", "--size", type="eng_float", default=400,
+    parser.add_option("-s", "--size", type="eng_float", default=387,
                       help="set packet size [default=%default]")
     parser.add_option("-M", "--megabytes", type="eng_float", default=1.0,
                       help="set megabytes to transmit [default=%default]")
@@ -110,6 +110,8 @@ def main():
         sys.stderr.write('.')
         if options.discontinuous and pktno % 5 == 4:
             time.sleep(1)
+            
+        time.sleep(0.5)            
         pktno += 1
         
     send_pkt(eof=True)

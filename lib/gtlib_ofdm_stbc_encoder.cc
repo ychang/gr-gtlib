@@ -28,31 +28,34 @@
 #include <iostream>
 
 gtlib_ofdm_stbc_encoder_sptr
-gtlib_make_ofdm_stbc_encoder (unsigned int fft_length,unsigned int code_type)
+gtlib_make_ofdm_stbc_encoder (unsigned int fft_length,const std::vector < std::vector <int> > &code_matrix, float code_rate)
 {
-	return gtlib_ofdm_stbc_encoder_sptr (new gtlib_ofdm_stbc_encoder (fft_length,code_type));
+	return gtlib_ofdm_stbc_encoder_sptr (new gtlib_ofdm_stbc_encoder (fft_length,code_matrix,code_rate));
 }
 
 
-gtlib_ofdm_stbc_encoder::gtlib_ofdm_stbc_encoder (unsigned int fft_length, unsigned int code_type)
+gtlib_ofdm_stbc_encoder::gtlib_ofdm_stbc_encoder (unsigned int fft_length, const std::vector < std::vector <int> > &code_matrix, float code_rate)
 	: gr_block ("ofdm_stbc_encoder",
 		gr_make_io_signature2 (1, 2, sizeof(gr_complex)*fft_length, sizeof(char)),
-		gr_make_io_signature (1, 1, sizeof(gr_complex)*fft_length)),
+		gr_make_io_signature (1, -1, sizeof(gr_complex)*fft_length)),
 		d_fft_length(fft_length),
-		d_code_type(code_type),
+		d_code_matrix(code_matrix),
 		d_encoding_idx(0)
 
 {
+    d_nsymbols = d_code_matrix[0].size()/2;
+    d_ntimeslots = (unsigned int)(float(d_nsymbols) / code_rate);
+    d_nantennas = d_code_matrix.size() / d_ntimeslots;
+    
+    // Initialize a symbol buffer    
+    d_stored_symbol.resize(d_nsymbols);
 
-    switch(code_type)
-    {
-        case 0:
-            d_block_size = 2;
-            break;
-        default:
-            d_block_size = 1;
-            break;
-    }
+    for (int ii=0;ii<d_nsymbols;ii++)
+        d_stored_symbol[ii].resize(d_fft_length);
+
+    printf ("[OFDM STBC Encoder] # of Required Symbols = %d\n",d_nsymbols);
+    printf ("[OFDM STBC Encoder] # of Time Slots = %d\n",d_ntimeslots);
+    printf ("[OFDM STBC Encoder] # of Antennas = %d\n",d_nantennas);
 }
 
 
@@ -77,63 +80,91 @@ gtlib_ofdm_stbc_encoder::general_work (int noutput_items,
 			       gr_vector_void_star &output_items)
 {
     const gr_complex *in = (const gr_complex *) input_items[0];
+    gr_complex *out;
     const char *in_flag = 0;    
-    gr_complex *out = (gr_complex *) output_items[0];
 
-    //printf("[OFDM STBC Encoder] noutput_items=%d\r\n",noutput_items);
+    // printf("[OFDM STBC Encoder] noutput_items=%d\r\n",noutput_items);
 
-    int ii=0,jj=0;
+    int ii,jj,kk,ll;
+    int selected_symbol;
+    bool conjugated;
+    float negative;
     
+    // Process a single symbol at a time
     
-    if (noutput_items < d_block_size)
+    /*
+    if (noutput_items < d_ntimeslots)
         return 0;
-    
+    */
     
     if(input_items.size() == 2)
-        in_flag = (char *) input_items[1];
-
-    for (ii=0 ;ii < noutput_items - (noutput_items%d_block_size) ;ii+=d_block_size)
     {
-        if (in_flag && in_flag[ii])
+        in_flag = (char *)input_items[1];
+        if (in_flag[0])
             d_encoding_idx = 0;
-        
-        switch(d_code_type)
-        {
-            case 0:
-            
-                for (jj = 0;jj < d_fft_length; jj++)
-                {
-                    if (0)
-                    {
-                        
-                        out[(ii)*d_fft_length + jj] = in[ii*d_fft_length + jj];
-                        out[(ii+1)*d_fft_length + jj] = gr_complex(0,0) - in[(ii+1)*d_fft_length + jj];
-                    
-                    }
-                    else
-                    {
-                        out[(ii)*d_fft_length + jj] = gr_complex(0,0) - in[(ii+1)*d_fft_length + jj];
-                        out[(ii+1)*d_fft_length + jj] = in[ii*d_fft_length + jj];
-                    }
-                }
-
-                break;
-                
-            default:
-                for (jj = 0;jj < d_fft_length; jj++)
-                {
-                    out[ii*d_fft_length + jj] = in[ii*d_fft_length + jj];
-                }
-                break;            
-         }
     }
+    
+    //printf ( "[OFDM STBC Encoder] Size of the stored symbol=%d\n", d_stored_symbol[d_encoding_idx].size());
+    
+    std::copy ( in, in+d_fft_length, d_stored_symbol[d_encoding_idx].begin());
 
+    consume_each (1);
+    
+    if (d_encoding_idx < (d_nsymbols-1))
+    {
+        d_encoding_idx++;
 
-    // Tell runtime system how many input items we consumed on
-    // each input stream.
-    consume_each (ii);
+        return 0;
+    }
+    else
+    {
+        d_encoding_idx=0;
 
-    // Tell runtime system how many output items we produced.
-    return ii;
+        for (ii = 0; ii < d_ntimeslots; ii++)
+        {
+            for (jj = 0;jj < d_nantennas; jj++)
+            {
+                if (jj < output_items.size())
+                {
+                    // Choose the antenna to transmit
+                    out = (gr_complex *) output_items[jj];
+                
+
+                    for (kk = 0; kk < 2*d_nsymbols; kk++)
+                    {
+                        // Find the non-zero element in the code matrix
+                        if ( d_code_matrix[ii*(d_nantennas) + jj][kk] != 0)
+                        {
+                            selected_symbol = kk % d_nsymbols;
+                            conjugated = ( kk >= d_nsymbols );
+                            negative = ( d_code_matrix[ii*(d_nantennas) + jj][kk] > 0) ? 1.0 : -1.0;
+                            
+                            //printf ("[OFDM STBC Encoder] ii=%d,jj=%d,kk=%d,selected_symbol=%d,conjugated=%d,negative=%f\n",
+                            //        ii,jj,kk,selected_symbol,(int)conjugated,negative);
+                            
+                            if (!conjugated)
+                            {
+                                for (ll = 0; ll < d_fft_length; ll++)
+                                {
+                                    out[ii*d_fft_length + ll] = negative*d_stored_symbol[selected_symbol][ll];    
+                                }
+                            }
+                            else
+                            {
+                                for (ll = 0; ll < d_fft_length; ll++)
+                                {
+                                    out[ii*d_fft_length + ll] = negative*conj(d_stored_symbol[selected_symbol][ll]);    
+                                }
+                            }
+                            
+                        }
+                    }    
+                }                    
+            }
+        }
+
+        return d_ntimeslots;        
+    }
+    
 }
 

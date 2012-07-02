@@ -28,7 +28,7 @@
 #include <gr_math.h>
 #include <cstdio>
 
-#define VERBOSE 0
+#define VERBOSE 1
 #define M_TWOPI (2*M_PI)
 #define MAX_NUM_SYMBOLS 1000
 
@@ -217,7 +217,7 @@ gtlib_ofdm_stbc_frame_acquisition::calculate_equalizer(const gr_complex *symbol,
     }
 }
 */
-
+/*
 void
 gtlib_ofdm_stbc_frame_acquisition::calculate_equalizer(const gr_complex *symbol, int zeros_on_left, int channel)
 {
@@ -233,6 +233,50 @@ gtlib_ofdm_stbc_frame_acquisition::calculate_equalizer(const gr_complex *symbol,
     for(i = 2; i < d_occupied_carriers; i+=2) {
         d_hestimate[channel][i] = d_training_symbol[channel][i] / 
             (coarse_freq_comp(d_coarse_freq,1)*(symbol[i+zeros_on_left+d_coarse_freq]));
+        d_hestimate[channel][i-1] = (d_hestimate[channel][i] + d_hestimate[channel][i-2]) / gr_complex(2.0, 0.0);    
+    }
+
+    // with even number of carriers; last equalizer tap is wrong
+    if(!(d_occupied_carriers & 1)) {
+        d_hestimate[channel][d_occupied_carriers-1] = d_hestimate[channel][d_occupied_carriers-2];
+    }
+
+    if(VERBOSE) {
+        
+        fprintf(stderr, "Equalizer setting:\n");
+        
+        for(i = 0; i < d_occupied_carriers; i++) {
+            gr_complex sym = coarse_freq_comp(d_coarse_freq,1)*symbol[i+zeros_on_left+d_coarse_freq];
+            gr_complex output = sym * d_hestimate[channel][i];
+            fprintf(stderr, "sym: %+.4f + j%+.4f  ks: %+.4f + j%+.4f  eq: %+.4f + j%+.4f  ==>  %+.4f + j%+.4f\n", 
+                sym .real(), sym.imag(),
+            d_training_symbol[channel][i].real(), d_training_symbol[channel][i].imag(),
+            d_hestimate[channel][i].real(), d_hestimate[channel][i].imag(),
+            output.real(), output.imag());
+        }
+
+        fprintf(stderr, "\n");
+
+    }
+}
+*/
+void
+gtlib_ofdm_stbc_frame_acquisition::calculate_equalizer(const gr_complex *symbol, int zeros_on_left, int channel)
+{
+    unsigned int i=0;
+
+    // Set first tap of equalizer
+    d_hestimate[channel][0] = (coarse_freq_comp(d_coarse_freq,1)*symbol[zeros_on_left+d_coarse_freq]) 
+                            / d_training_symbol[channel][0];
+        ;
+
+    // set every even tap based on known symbol
+    // linearly interpolate between set carriers to set zero-filled carriers
+    // FIXME: is this the best way to set this?
+    for(i = 2; i < d_occupied_carriers; i+=2) {
+        d_hestimate[channel][i] = (coarse_freq_comp(d_coarse_freq,1)*(symbol[i+zeros_on_left+d_coarse_freq])) 
+                            / d_training_symbol[channel][i];
+            ;
         d_hestimate[channel][i-1] = (d_hestimate[channel][i] + d_hestimate[channel][i-2]) / gr_complex(2.0, 0.0);    
     }
 
@@ -307,7 +351,7 @@ gtlib_ofdm_stbc_frame_acquisition::general_work(int noutput_items,
         
         if ( (d_symbol_idx-1) < d_block_size)
         {
-            printf("[OFDM Frame Acquisition] : Training Sequence %d\n",d_symbol_idx-1);
+            //printf("[OFDM Frame Acquisition] : Training Sequence %d\n",d_symbol_idx-1);
             
             calculate_equalizer(symbol, zeros_on_left, d_symbol_idx-1);
             
@@ -339,39 +383,20 @@ gtlib_ofdm_stbc_frame_acquisition::general_work(int noutput_items,
                 
                 if ( ((d_symbol_idx-d_block_size-1)%d_block_size) == 0 )
                 {
-                    int channel=1;
-                
                     switch(d_code_type)
                     {
                         case 0: 
 
-                            if (0)
+                            //printf("OFDM Frame Acquisition: Odd Frame\n");
+                            for(unsigned int i = 0; i < d_occupied_carriers; i++) 
                             {
-                                printf("OFDM Frame Acquisition: Odd Frame\n");
-                                for(unsigned int i = 0; i < d_occupied_carriers; i++) 
-                                {
-                                    out[i] = d_hestimate[channel][i]*stored_symbol[0][i];
-                                }
-            
-                                printf("OFDM Frame Acquisition: Even Frame\n");
-                                for(unsigned int i = 0; i < d_occupied_carriers; i++) 
-                                {
-                                    out[d_occupied_carriers + i] = gr_complex(0,0) - d_hestimate[channel][i]*stored_symbol[1][i];
-                                }
+                                out[i] = conj(d_hestimate[0][i])*stored_symbol[0][i] + d_hestimate[1][i]*conj(stored_symbol[1][i]);
                             }
-                            else
+        
+                            //printf("OFDM Frame Acquisition: Even Frame\n");
+                            for(unsigned int i = 0; i < d_occupied_carriers; i++) 
                             {
-                                printf("OFDM Frame Acquisition: Odd Frame\n");
-                                for(unsigned int i = 0; i < d_occupied_carriers; i++) 
-                                {
-                                    out[d_occupied_carriers + i] = gr_complex(0,0) - d_hestimate[channel][i]*stored_symbol[0][i];
-                                }
-            
-                                printf("OFDM Frame Acquisition: Even Frame\n");
-                                for(unsigned int i = 0; i < d_occupied_carriers; i++) 
-                                {
-                                    out[i] = d_hestimate[channel][i]*stored_symbol[1][i];
-                                }
+                                out[d_occupied_carriers + i] = conj(d_hestimate[1][i])*stored_symbol[0][i] - d_hestimate[0][i]*conj(stored_symbol[1][i]);
                             }
                             
                             break;
