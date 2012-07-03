@@ -75,7 +75,7 @@ class my_top_block(gr.top_block):
         symbols_per_packet = math.ceil(((4+1+options.size+4) * 8) / math.log(self.txpath.arity,2) / self.subcarrier_size)
         
         # 1 set of Preamble
-        samples_per_packet = (symbols_per_packet + 4) * (options.fft_length+options.cp_length)
+        samples_per_packet = (symbols_per_packet + 3 + 0) * (options.fft_length+options.cp_length)
 
 
 
@@ -84,7 +84,7 @@ class my_top_block(gr.top_block):
 
 
         if options.discontinuous:
-            stream_size = [1000, int(options.discontinuous*samples_per_packet)]
+            stream_size = [1000, int(options.discontinuous*samples_per_packet) + 512]
         else:
             stream_size = [0, 100000]
 
@@ -144,7 +144,7 @@ def main():
                 
     parser = OptionParser(option_class=eng_option, conflict_handler="resolve")
     expert_grp = parser.add_option_group("Expert")
-    parser.add_option("-s", "--size", type="eng_float", default=411,
+    parser.add_option("-s", "--size", type="eng_float", default=387,
                       help="set packet size [default=%default]")
     parser.add_option("-M", "--megabytes", type="eng_float", default=1.0,
                       help="set megabytes to transmit [default=%default]")

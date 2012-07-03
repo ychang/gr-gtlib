@@ -146,6 +146,16 @@ class transmit_path(gr.hier_block2):
         
         # Create and setup transmit path flow graph
         
+        self.subcarrier_size = self._pkt_input.subcarrier_size() 
+        symbols_per_packet = math.ceil(((4+1+options.size+4) * 8) / math.log(self.arity,2) / self.subcarrier_size)
+        samples_per_packet = (symbols_per_packet + 3 + 0) * (options.fft_length+options.cp_length)
+
+        stream_size = [int(options.discontinuous*samples_per_packet), 512]
+
+        z = [0,]
+        self.zeros = gr.vector_source_c(z, True)
+        self.mux = gr.stream_mux(gr.sizeof_gr_complex, stream_size)
+        
         
         #self.connect((self._pkt_input, 0), (self.preambles, 0))
         #self.connect((self._pkt_input, 1), (self.preambles, 1))
@@ -158,7 +168,10 @@ class transmit_path(gr.hier_block2):
 
         self.connect((self._pkt_input, 1), (self.preambles, 1))
         
-        self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, self)
+        #self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, self)
+        self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, (self.mux,0))
+        self.connect(self.zeros , (self.mux,1))
+        self.connect(self.mux, self)
 
      
         if options.verbose:
@@ -167,6 +180,8 @@ class transmit_path(gr.hier_block2):
         if options.log:
             self.connect(self._pkt_input, gr.file_sink(gr.sizeof_gr_complex*options.fft_length,
                                                        "ofdm_mapper_c.dat"))
+            self.connect((self.stbc_encoder,0), gr.file_sink(gr.sizeof_gr_complex*options.fft_length,
+                                                       "ofdm_stbc_encoder_c.dat"))
             self.connect(self.preambles, gr.file_sink(gr.sizeof_gr_complex*options.fft_length,
                                                       "ofdm_preambles.dat"))
             self.connect(self.ifft, gr.file_sink(gr.sizeof_gr_complex*options.fft_length,

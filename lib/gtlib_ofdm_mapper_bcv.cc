@@ -243,22 +243,25 @@ gtlib_ofdm_mapper_bcv::work(int noutput_items,
                 i++;
             }
             
-            d_eot = true;           
-            /*
+            //d_eot = true;           
+            
             if (d_msg->type() == 1)	        // type == 1 sets EOF
                 d_eof = true;
 
             d_msg.reset();   			// finished packet, free message
             assert(d_bit_offset == 0);
-            */
+            
         }
     }
     else
     {
     
         printf ("[OFDM Mapper : Zeros Dummy\n");
-        memset(out, 0, d_fft_length*sizeof(gr_complex));
+        memset(out, 0, d_fft_length*sizeof(gr_complex)*2);
         
+        for (i=0;i<2*d_fft_length;i++)
+            out[i] = gr_complex(1,1);
+
         if (d_msg->type() == 1)	        // type == 1 sets EOF
             d_eof = true;
 
@@ -266,6 +269,7 @@ gtlib_ofdm_mapper_bcv::work(int noutput_items,
         assert(d_bit_offset == 0);
 
         d_eot = false;
+        return 2;
     }
     
     if (out_flag)
