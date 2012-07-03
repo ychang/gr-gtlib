@@ -168,11 +168,12 @@ class transmit_path(gr.hier_block2):
 
         self.connect((self._pkt_input, 1), (self.preambles, 1))
         
-        #self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, self)
+        self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, self)
+        """
         self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, (self.mux,0))
         self.connect(self.zeros , (self.mux,1))
         self.connect(self.mux, self)
-
+        """
      
         if options.verbose:
             self._print_verbage()
