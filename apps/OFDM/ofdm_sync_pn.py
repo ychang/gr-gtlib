@@ -62,8 +62,8 @@ class ofdm_sync_pn(gr.hier_block2):
         self.inputmag2 = gr.complex_to_mag_squared()
 
         # Modified by Yong (12.06.27)
-        movingsum2_taps = [1.0 for i in range(fft_length//2)]
-        #movingsum2_taps = [0.5 for i in range(fft_length)]
+        #movingsum2_taps = [1.0 for i in range(fft_length//2)]
+        movingsum2_taps = [0.5 for i in range(fft_length)]
 
         if 1:
             self.inputmovingsum = gr.fir_filter_fff(1,movingsum2_taps)

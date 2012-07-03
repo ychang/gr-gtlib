@@ -66,7 +66,6 @@ class receive_path(gr.hier_block2):
         zeros_on_left = int(math.ceil((self._fft_length - self._occupied_tones)/2.0))
 
         preamble_sequence = known_symbols_4512_3[0:self._occupied_tones]
-
         training_sequence = ( known_symbols_4512_3[self._occupied_tones:self._occupied_tones*2], \
                             known_symbols_4512_3[self._occupied_tones*2:self._occupied_tones*3] )
 

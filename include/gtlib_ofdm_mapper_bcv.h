@@ -56,7 +56,7 @@ protected:
   gr_message_sptr	d_msg;
   unsigned		d_msg_offset;
   bool			d_eof;
-  
+  bool          d_eot;  
   unsigned int 		d_occupied_carriers;
   unsigned int 		d_fft_length;
   unsigned int 		d_bit_offset;
