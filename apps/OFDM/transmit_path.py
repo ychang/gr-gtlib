@@ -150,7 +150,7 @@ class transmit_path(gr.hier_block2):
         symbols_per_packet = math.ceil(((4+1+options.size+4) * 8) / math.log(self.arity,2) / self.subcarrier_size)
         samples_per_packet = (symbols_per_packet + 3 + 0) * (options.fft_length+options.cp_length)
 
-        stream_size = [int(options.discontinuous*samples_per_packet), 512]
+        stream_size = [int(options.discontinuous*samples_per_packet), 0]
 
         z = [0.000001,]
         self.zeros = gr.vector_source_c(z, True)
