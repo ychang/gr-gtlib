@@ -168,12 +168,14 @@ class transmit_path(gr.hier_block2):
 
         self.connect((self._pkt_input, 1), (self.preambles, 1))
         
-        self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, self)
-        """
-        self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, (self.mux,0))
-        self.connect(self.zeros , (self.mux,1))
-        self.connect(self.mux, self)
-        """
+        if options.dummy_zero:
+            self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, (self.mux,0))
+            self.connect(self.zeros , (self.mux,1))
+            self.connect(self.mux, self)
+        else:        
+            self.connect(self.preambles, self.ifft, self.cp_adder, self.scale, self.amp, self)
+        
+        
      
         if options.verbose:
             self._print_verbage()
@@ -245,6 +247,10 @@ class transmit_path(gr.hier_block2):
                           help="set symbol bandwidth [default=%default]")
         normal.add_option("-v", "--verbose", action="store_true",
                           default=False)
+        
+        normal.add_option("", "--dummy-zero", action="store_true",
+                          default=False)
+        
         expert.add_option("", "--log", action="store_true",
                           default=False,
                           help="Log all parts of flow graph to file (CAUTION: lots of data)")
