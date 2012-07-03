@@ -111,7 +111,7 @@ def main():
         if options.discontinuous and pktno % 5 == 4:
             time.sleep(1)
             
-        time.sleep(0.5)            
+        time.sleep(0.05)            
         pktno += 1
         
     send_pkt(eof=True)
