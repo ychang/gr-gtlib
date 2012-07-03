@@ -152,7 +152,7 @@ class transmit_path(gr.hier_block2):
 
         stream_size = [int(options.discontinuous*samples_per_packet), 512]
 
-        z = [0,]
+        z = [0.000001,]
         self.zeros = gr.vector_source_c(z, True)
         self.mux = gr.stream_mux(gr.sizeof_gr_complex, stream_size)
         
